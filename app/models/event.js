@@ -13,10 +13,14 @@ const days = [
 ];
 
 export default DS.Model.extend({
-  temp: DS.attr('number'),
+  temp: DS.attr('number', {
+    defaultValue: 18,
+  }),
 
   // Seconds since 00:00 Monday.
-  seconds: DS.attr('number'),
+  seconds: DS.attr('number', {
+    defaultValue: 0,
+  }),
 
   day: Ember.computed('seconds', {
     get() {

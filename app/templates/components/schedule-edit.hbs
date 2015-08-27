@@ -1,5 +1,7 @@
 {{schedule.label}}
 
+<button {{action 'createNewEvent'}}>New Event</button>
+
 {{#each schedule.sortedEvents as |event|}}
 
   {{event-edit event=event}}

@@ -2,4 +2,7 @@
 <label>Day: {{input type="number" value=event.day}}</label>
 <label>Time: {{input value=event.time}}</label>
 
+<button {{action 'save'}}>Save</button>
+<button {{action 'remove'}}>Remove</button>
+
 {{yield}}
