@@ -23,20 +23,20 @@ export default DS.Model.extend({
       return Math.floor(this.get('seconds') / secondsInDay);
     },
 
-    set(key, value) {
-      value = value % days.length;
+    set(key, day) {
+      day = day % days.length;
 
-      if (value < 0) {
-        value += days.length;
+      if (day < 0) {
+        day += days.length;
       }
 
-      const newDayOffset     = value * secondsInDay;
+      const newDayOffset     = day * secondsInDay;
       const oldDayOffset     = this.get('day') * secondsInDay;
       const secondsRemaining = this.get('seconds') - oldDayOffset;
 
       this.set('seconds', newDayOffset + secondsRemaining);
 
-      return value;
+      return day;
     },
   }),
 
@@ -45,10 +45,10 @@ export default DS.Model.extend({
       return days[this.get('day')];
     },
 
-    set(key, value) {
-      this.set('day', days.indexOf(value));
+    set(key, dayLabel) {
+      this.set('day', days.indexOf(dayLabel));
 
-      return value;
+      return dayLabel;
     },
   }),
 
@@ -62,12 +62,12 @@ export default DS.Model.extend({
       return time.format('HH:mm');
     },
 
-    set(key, value) {
-      const time = moment.duration(value);
+    set(key, time) {
+      const duration = moment.duration(time);
 
-      this.set('seconds', time.asSeconds());
+      this.set('seconds', duration.asSeconds());
 
-      return value;
+      return time;
     },
   }),
 });
