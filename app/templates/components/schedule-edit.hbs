@@ -1,3 +1,10 @@
 {{schedule.name}}
 
+{{#each schedule.events as |event|}}
+
+  {{event.temp}}
+  {{event.day}}
+
+{{/each}}
+
 {{yield}}
