@@ -24,6 +24,12 @@ export default DS.Model.extend({
     },
 
     set(key, value) {
+      value = value % days.length;
+
+      if (value < 0) {
+        value += days.length;
+      }
+
       const newDayOffset     = value * secondsInDay;
       const oldDayOffset     = this.get('day') * secondsInDay;
       const secondsRemaining = this.get('seconds') - oldDayOffset;
