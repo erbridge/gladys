@@ -1,0 +1,9 @@
+<button {{action 'createNewSchedule'}}>New Schedule</button>
+
+{{#each list.schedules as |schedule|}}
+
+  {{schedule-edit schedule=schedule createNewEvent='createNewEvent'}}
+
+{{/each}}
+
+{{yield}}

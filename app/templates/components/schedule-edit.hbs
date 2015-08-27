@@ -1,6 +1,8 @@
-{{schedule.label}}
+<label>Label: {{input value=schedule.label}}</label>
 
 <button {{action 'createNewEvent'}}>New Event</button>
+<button {{action 'save'}}>Save</button>
+<button {{action 'remove'}}>Remove</button>
 
 {{#each schedule.sortedEvents as |event|}}
 

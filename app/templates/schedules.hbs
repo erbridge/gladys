@@ -1,7 +1,3 @@
-{{#each model as |schedule|}}
-
-  {{schedule-edit schedule=schedule createNewEvent='createNewEvent'}}
-
-{{/each}}
+{{schedule-list list=model createNewSchedule='createNewSchedule' createNewEvent='createNewEvent'}}
 
 {{outlet}}
