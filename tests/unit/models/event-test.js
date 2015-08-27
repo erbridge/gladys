@@ -16,5 +16,5 @@ test('first day is Monday', function(assert) {
     seconds: 0,
   });
 
-  assert.equal(model.get('day'), 'monday');
+  assert.equal(model.get('dayLabel'), 'monday');
 });
