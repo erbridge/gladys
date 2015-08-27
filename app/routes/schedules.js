@@ -15,7 +15,7 @@ export default Ember.Route.extend({
 
     return [
       store.createRecord('schedule', {
-        name:   'bedroom',
+        label:  'bedroom',
         events: events,
       }),
     ];
