@@ -24,5 +24,7 @@ module.exports = function(defaults) {
     production:  'bower_components/moment/min/moment.min.js',
   });
 
+  app.import('bower_components/cuid/dist/browser-cuid.js');
+
   return app.toTree();
 };

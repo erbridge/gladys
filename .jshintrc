@@ -1,5 +1,6 @@
 {
   "predef": [
+    "cuid",
     "document",
     "moment",
     "window",
