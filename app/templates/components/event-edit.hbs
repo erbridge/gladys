@@ -1,5 +1,5 @@
-{{#if event.temp}}{{event.temp}}C{{/if}}
-{{event.dayLabel}}
-{{event.time}}
+<label>Temperature: {{input type="number" value=event.temp}}</label>
+<label>Day: {{input type="number" value=event.day}}</label>
+<label>Time: {{input value=event.time}}</label>
 
 {{yield}}
