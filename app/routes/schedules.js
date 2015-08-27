@@ -11,6 +11,10 @@ export default Ember.Route.extend({
         temp:    10,
         seconds: 1000,
       }),
+      store.createRecord('event', {
+        temp:    15,
+        seconds: 1300,
+      }),
     ];
 
     return [
