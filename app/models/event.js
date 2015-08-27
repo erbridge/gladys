@@ -29,6 +29,8 @@ export default DS.Model.extend({
       const secondsRemaining = this.get('seconds') - oldDayOffset;
 
       this.set('seconds', newDayOffset + secondsRemaining);
+
+      return value;
     },
   }),
 
@@ -39,10 +41,12 @@ export default DS.Model.extend({
 
     set(key, value) {
       this.set('day', days.indexOf(value));
+
+      return value;
     },
   }),
 
-  timeLabel: Ember.computed('seconds', 'day', {
+  time: Ember.computed('seconds', 'day', {
     get() {
       const dayOffset = this.get('day') * secondsInDay;
       const seconds   = this.get('seconds') - dayOffset;
@@ -56,6 +60,8 @@ export default DS.Model.extend({
       const time = moment.duration(value);
 
       this.set('seconds', time.asSeconds());
+
+      return value;
     },
   }),
 });

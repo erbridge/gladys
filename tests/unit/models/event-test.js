@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import { moduleForModel, test } from 'ember-qunit';
 
 moduleForModel('event', 'Unit | Model | event', {
@@ -17,4 +18,18 @@ test('first day is Monday', function(assert) {
   });
 
   assert.equal(model.get('dayLabel'), 'monday');
+});
+
+test('setting the day does not change the time', function(assert) {
+  var model = this.subject({
+    seconds: 12345,
+  });
+
+  var time = model.get('time');
+
+  Ember.run(function() {
+    model.set('day', 3);
+  });
+
+  assert.equal(model.get('time'), time);
 });

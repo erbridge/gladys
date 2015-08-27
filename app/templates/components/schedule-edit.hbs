@@ -2,9 +2,7 @@
 
 {{#each schedule.events as |event|}}
 
-  {{event.temp}}C
-  {{event.dayLabel}}
-  {{event.timeLabel}}
+  {{event-edit event=event}}
 
 {{/each}}
 
