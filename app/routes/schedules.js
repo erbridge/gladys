@@ -26,10 +26,10 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    createNewEvent(schedule) {
+    createNewEvent(events) {
       const event = this.store.createRecord('event');
 
-      schedule.get('events').addObject(event);
+      events.addObject(event);
     },
   },
 });
