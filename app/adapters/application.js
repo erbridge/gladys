@@ -7,6 +7,7 @@ const database  = {};
 const remoteMap = {
   'gladys@model:schedule-list:': {
     type: 'schedule-list',
+    skip: true,
   },
   'gladys@model:schedule:': {
     type: 'schedule',
@@ -55,6 +56,10 @@ const saveRemote = function(remoteType) {
 
 const updateRemote = function(localType) {
   const remoteConfig = remoteMap[localType];
+
+  if (remoteConfig.skip) {
+    return;
+  }
 
   if (remoteConfig.sendParent) {
     return updateRemote(remoteConfig.sendParent);
