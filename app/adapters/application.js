@@ -4,6 +4,22 @@ import DS from 'ember-data';
 const remoteUrl = 'http://192.168.1.31:3480/data_request';
 const database  = {};
 
+const remoteMap = {
+  'gladys@model:schedule-list:': {
+    type: 'schedule-list',
+  },
+  'gladys@model:schedule:': {
+    type: 'schedule',
+    flattenDown: {
+      events: 'gladys@model:event:',
+    },
+  },
+  'gladys@model:event:': {
+    type:       'event',
+    sendParent: 'gladys@model:schedule:',
+  },
+};
+
 const sendRequest = function(data) {
   return new Ember.RSVP.Promise(function(resolve, reject) {
     Ember.$.ajax({
@@ -19,40 +35,70 @@ const sendRequest = function(data) {
   });
 };
 
-const clearRemote = function(typeString) {
+const clearRemote = function(localType) {
   const data = {
     id:   'lr_scheduler',
     op:   'clear',
-    name: typeString,
+    name: localType,
   };
 
   return sendRequest(data);
 };
 
-const saveRemote = function(typeString) {
+const saveRemote = function(localType) {
   const data = {
     id:   'lr_scheduler',
     op:   'save',
-    name: typeString,
+    name: localType,
   };
 
   return sendRequest(data);
 };
 
-const updateRemote = function(typeString) {
-  // TODO: Split into 5000 character chunks.
-  const json = JSON.stringify(database[typeString]);
+const updateRemote = function(localType) {
+  const remoteConfig = remoteMap[localType];
+
+  if (remoteConfig.sendParent) {
+    return updateRemote(remoteConfig.sendParent);
+  }
+
+  const rawData = _.clone(database[localType]);
+
+  if (remoteConfig.flattenDown) {
+    _.each(rawData, function(datum, id) {
+      datum = _.clone(datum);
+      rawData[id] = datum;
+
+      _.each(remoteConfig.flattenDown, function(type, key) {
+        if (!datum[key]) {
+          return;
+        }
+
+        datum[key] = _.clone(datum[key]);
+
+        _.each(datum[key], function(id, j) {
+          const newValue = database[type][id];
+
+          datum[key][j] = newValue;
+        });
+      });
+    });
+  }
+
+  const remoteType = remoteMap[localType].type;
 
   const data = {
     id:   'lr_scheduler',
     op:   'append',
-    data: json,
+
+    // TODO: Split into 5000 character chunks.
+    data: _.values(rawData),
   };
 
   // FIXME: This doesn't return the right promise.
-  return clearRemote(typeString).then(function() {
+  return clearRemote(remoteType).then(function() {
     sendRequest(data).then(function() {
-      saveRemote(typeString);
+      saveRemote(remoteType);
     });
   });
 };
@@ -70,17 +116,17 @@ export default DS.Adapter.extend({
     const data = {};
     const serializer = store.serializerFor(type.modelName);
 
-    serializer.serializeIntoHash(data, type, snapshot);
+    serializer.serializeIntoHash(data, type, snapshot, { includeId: true });
 
-    const typeString = type.toString();
+    const localType = type.toString();
 
-    if (!database[typeString]) {
-      database[typeString] = {};
+    if (!database[localType]) {
+      database[localType] = {};
     }
 
-    database[typeString][snapshot.id] = data;
+    database[localType][snapshot.id] = data;
 
-    return updateRemote(typeString);
+    return updateRemote(localType);
   },
 
   updateRecord(store, type, snapshot) {
@@ -88,14 +134,14 @@ export default DS.Adapter.extend({
   },
 
   deleteRecord(store, type, snapshot) {
-    const typeString = type.toString();
+    const localType = type.toString();
 
-    if (database[typeString]) {
-      delete database[typeString][snapshot.id];
+    if (database[localType]) {
+      delete database[localType][snapshot.id];
     }
 
     // TODO: Don't update if the data hasn't changed?
-    return updateRemote(typeString);
+    return updateRemote(localType);
   },
 
   // TODO

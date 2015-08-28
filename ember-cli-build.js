@@ -19,12 +19,17 @@ module.exports = function(defaults) {
   // please specify an object with the list of modules as keys
   // along with the exports of each module as its value.
 
+  app.import('bower_components/cuid/dist/browser-cuid.js');
+
   app.import({
     development: 'bower_components/moment/moment.js',
     production:  'bower_components/moment/min/moment.min.js',
   });
 
-  app.import('bower_components/cuid/dist/browser-cuid.js');
+  app.import({
+    development: 'bower_components/underscore/underscore.js',
+    production:  'bower_components/underscore/underscore-min.js',
+  });
 
   return app.toTree();
 };

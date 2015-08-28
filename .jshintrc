@@ -4,7 +4,8 @@
     "document",
     "moment",
     "window",
-    "-Promise"
+    "-Promise",
+    "_"
   ],
   "browser": true,
   "boss": true,
