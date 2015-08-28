@@ -21,15 +21,29 @@ const remoteMap = {
   },
 };
 
-const sendRequest = function(data) {
+const sendRequest = function(data, dataType) {
   return new Ember.RSVP.Promise(function(resolve, reject) {
-    Ember.$.ajax({
+    var config = {
       type: 'GET',
       url:  remoteUrl,
       data: data,
-    }).then(function(data) {
+    };
+
+    if (dataType) {
+      config.dataType = dataType;
+    }
+
+    console.log(data);
+    console.log(config);
+
+    Ember.$.ajax(config).then(function(data) {
+      console.log(data);
+
       Ember.run(null, resolve, data);
     }, function(jqXHR) {
+      console.log('error');
+      console.log(jqXHR);
+
       jqXHR.then = null;
       Ember.run(null, reject, jqXHR);
     });
@@ -54,18 +68,8 @@ const saveRemote = function(remoteType) {
   return sendRequest(data);
 };
 
-const updateRemote = function(localType) {
-  const remoteConfig = remoteMap[localType];
-
-  if (remoteConfig.skip) {
-    return;
-  }
-
-  if (remoteConfig.sendParent) {
-    return updateRemote(remoteConfig.sendParent);
-  }
-
-  const rawData = _.clone(database[localType]);
+const flattenData = function(data, remoteConfig) {
+  const rawData = _.clone(data);
 
   if (remoteConfig.flattenDown) {
     _.each(rawData, function(datum, id) {
@@ -86,6 +90,48 @@ const updateRemote = function(localType) {
         });
       });
     });
+  }
+
+  return rawData;
+};
+
+const inflateData = function(data, localType) {
+  const remoteConfig = remoteMap[localType];
+
+  if (!database[localType]) {
+    database[localType] = {};
+  }
+
+  _.each(data, function(datum) {
+    _.each(remoteConfig.flattenDown, function(type, key) {
+      if (!database[type]) {
+        database[type] = {};
+      }
+
+      _.each(datum[key], function(record, j) {
+        const id = record.id;
+
+        database[type][id] = record;
+
+        datum[key][j] = id;
+      });
+    });
+
+    database[localType][datum.id] = datum;
+  });
+
+  console.log(database);
+};
+
+const updateRemote = function(localType) {
+  const remoteConfig = remoteMap[localType];
+
+  if (remoteConfig.skip) {
+    return;
+  }
+
+  if (remoteConfig.sendParent) {
+    return updateRemote(remoteConfig.sendParent);
   }
 
   const sendChunks = function(dataString, totalSent, doneCallback) {
@@ -114,6 +160,7 @@ const updateRemote = function(localType) {
   };
 
   const remoteType = remoteMap[localType].type;
+  const rawData    = flattenData(database[localType], remoteConfig);
   const dataString = JSON.stringify(_.values(rawData));
 
   // FIXME: This doesn't return the right promise.
@@ -123,6 +170,31 @@ const updateRemote = function(localType) {
       // FIXME: Check this is returning the right response.
       saveRemote(remoteType);
     });
+  });
+};
+
+const updateLocal = function(localType) {
+  const remoteConfig = remoteMap[localType];
+
+  if (remoteConfig.skip) {
+    return;
+  }
+
+  if (remoteConfig.sendParent) {
+    return updateLocal(remoteConfig.sendParent);
+  }
+
+  const params = {
+    op:   'get',
+    name: remoteConfig.type,
+  };
+
+  return new Ember.RSVP.Promise(function(resolve, reject) {
+    sendRequest(params, 'json').then(function(data) {
+      inflateData(data || [], localType);
+
+      resolve(_.values(database[localType]));
+    }, reject);
   });
 };
 
@@ -159,18 +231,21 @@ export default DS.Adapter.extend({
       delete database[localType][snapshot.id];
     }
 
-    // TODO: Don't update if the data hasn't changed?
     return updateRemote(localType);
   },
 
-  // TODO
-  findRecord() {
-
+  findAll(store, type) {
+    return updateLocal(type.toString());
   },
 
-  // TODO
-  findAll() {
+  findRecord(store, type, id) {
+    const localType = type.toString();
 
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      updateLocal(localType).then(function() {
+        resolve(database[localType][id]);
+      }, reject);
+    });
   },
 
   // TODO
