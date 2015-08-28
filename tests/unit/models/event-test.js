@@ -6,12 +6,6 @@ moduleForModel('event', 'Unit | Model | event', {
   needs: []
 });
 
-test('it exists', function(assert) {
-  var model = this.subject();
-  // var store = this.store();
-  assert.ok(!!model);
-});
-
 test('first day is Monday', function(assert) {
   var model = this.subject({
     seconds: 0,
