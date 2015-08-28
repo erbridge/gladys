@@ -85,19 +85,40 @@ const updateRemote = function(localType) {
     });
   }
 
-  const remoteType = remoteMap[localType].type;
+  const sendChunks = function(dataString, totalSent, doneCallback) {
+    const chunk     = dataString.slice(0, 4000);
+    const remainder = dataString.slice(4000);
 
-  const data = {
-    id:   'lr_scheduler',
-    op:   'append',
+    totalSent += chunk.length;
 
-    // TODO: Split into 5000 character chunks.
-    data: _.values(rawData),
+    const data = {
+      id:   'lr_scheduler',
+      op:   'append',
+      data: chunk,
+    };
+
+    sendRequest(data).then(function(resp) {
+      if (parseInt(resp) !== totalSent) {
+        // FIXME: An error has occurred. Retry.
+        return;
+      }
+
+      if (remainder) {
+        sendChunks(remainder, totalSent, doneCallback);
+      } else {
+        doneCallback(totalSent);
+      }
+    });
   };
 
+  const remoteType = remoteMap[localType].type;
+  const dataString = JSON.stringify(_.values(rawData));
+
   // FIXME: This doesn't return the right promise.
+  // FIXME: Check this is returning the right response.
   return clearRemote(remoteType).then(function() {
-    sendRequest(data).then(function() {
+    sendChunks(dataString, 0, function() {
+      // FIXME: Check this is returning the right response.
       saveRemote(remoteType);
     });
   });
