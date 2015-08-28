@@ -50,7 +50,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+    ENV.baseURL = '/cgi-bin/cmh/gladys_get.sh/';
   }
 
   return ENV;

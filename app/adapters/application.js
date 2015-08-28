@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-const remoteUrl = 'http://192.168.1.31:3480/data_request';
+const remoteUrl = 'http://192.168.1.31/cgi-bin/cmh/gladys_relay.sh/';
 const database  = {};
 
 const remoteMap = {
@@ -35,21 +35,19 @@ const sendRequest = function(data) {
   });
 };
 
-const clearRemote = function(localType) {
+const clearRemote = function(remoteType) {
   const data = {
-    id:   'lr_scheduler',
     op:   'clear',
-    name: localType,
+    name: remoteType,
   };
 
   return sendRequest(data);
 };
 
-const saveRemote = function(localType) {
+const saveRemote = function(remoteType) {
   const data = {
-    id:   'lr_scheduler',
     op:   'save',
-    name: localType,
+    name: remoteType,
   };
 
   return sendRequest(data);
@@ -92,7 +90,6 @@ const updateRemote = function(localType) {
     totalSent += chunk.length;
 
     const data = {
-      id:   'lr_scheduler',
       op:   'append',
       data: chunk,
     };
@@ -122,10 +119,6 @@ const updateRemote = function(localType) {
       saveRemote(remoteType);
     });
   });
-};
-
-const updateLocal = function() {
-  // TODO: Get the remote data and overwrite the existing data with it.
 };
 
 export default DS.Adapter.extend({
