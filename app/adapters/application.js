@@ -25,6 +25,9 @@ const remoteMap = {
   },
   'gladys@model:room:': {
     type: 'room',
+    flattenDown: {
+      events: 'gladys@model:device:',
+    },
   },
   'gladys@model:device:': {
     type:       'device',
