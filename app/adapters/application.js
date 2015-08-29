@@ -63,6 +63,10 @@ const flattenData = function(data, remoteConfig) {
           return;
         }
 
+        if (!database[type]) {
+          database[type] = {};
+        }
+
         datum[key] = _.clone(datum[key]);
 
         _.each(datum[key], function(id, j) {
@@ -101,8 +105,6 @@ const inflateData = function(data, localType) {
 
     database[localType][datum.id] = datum;
   });
-
-  console.log(database);
 };
 
 const requestQueue = [];
@@ -190,6 +192,10 @@ const updateLocal = function(localType) {
     name: remoteConfig.type,
   };
 
+  if (!database[localType]) {
+    database[localType] = {};
+  }
+
   return new Ember.RSVP.Promise(function(resolve, reject) {
     request.send(params, 'json').then(function(data) {
       inflateData(data || [], localType);
@@ -241,6 +247,10 @@ export default DS.Adapter.extend({
 
   findRecord(store, type, id) {
     const localType = type.toString();
+
+    if (!database[localType]) {
+      database[localType] = {};
+    }
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
       updateLocal(localType).then(function() {
