@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import request from '../utils/request';
 
 export default Ember.Route.extend({
   model() {
@@ -7,21 +8,38 @@ export default Ember.Route.extend({
     const roomList = store.createRecord('room-list');
     const rooms    = roomList.get('rooms');
 
-    // TODO: This comes from the remote.
-    const names = [ 'Living Room', 'Bathroom' ];
+    request.send({ op: 'rooms' }, 'json').then(function(rawRooms) {
+      _.each(rawRooms, function(rawRoom, name) {
+        // FIXME: Something odd happens with spaces being replaced by +es,
+        //        so force it here.
+        name = name.replace(' ', '+');
 
-    _.each(names, function(name) {
-      store.query('room', { label: name }).then(function(matches) {
-        if (!matches.get('length')) {
-          rooms.pushObject(store.createRecord('room', { label: name }));
-        } else {
-          rooms.pushObjects(matches);
-        }
+        store.query('room', { label: name }).then(function(matches) {
+          if (!matches.get('length')) {
+            rooms.pushObject(store.createRecord('room', { label: name }));
+          } else {
+            let match;
+
+            // FIXME: Should we really be doing this?
+            //        Duplicates shouldn't be introduced.
+            //        Use the name as the ID?
+            matches.forEach(function(matchedRoom) {
+              if (!match) {
+                match = matchedRoom;
+              } else {
+                // Remove duplicates.
+                matchedRoom.destroyRecord();
+              }
+            });
+
+            rooms.pushObject(match);
+          }
+        });
       });
-    });
 
-    rooms.forEach(function(room) {
-      room.save();
+      rooms.forEach(function(room) {
+        room.save();
+      });
     });
 
     const scheduleList = store.createRecord('schedule-list');

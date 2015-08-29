@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
+import request from '../utils/request';
 
-const remoteUrl = 'http://192.168.1.31/cgi-bin/cmh/gladys_relay.sh/';
 const database  = {};
 
 const remoteMap = {
@@ -28,42 +28,13 @@ const remoteMap = {
   },
 };
 
-const sendRequest = function(data, dataType) {
-  return new Ember.RSVP.Promise(function(resolve, reject) {
-    var config = {
-      type: 'GET',
-      url:  remoteUrl,
-      data: data,
-    };
-
-    if (dataType) {
-      config.dataType = dataType;
-    }
-
-    console.log(data);
-    console.log(config);
-
-    Ember.$.ajax(config).then(function(data) {
-      console.log(data);
-
-      Ember.run(null, resolve, data);
-    }, function(jqXHR) {
-      console.log('error');
-      console.log(jqXHR);
-
-      jqXHR.then = null;
-      Ember.run(null, reject, jqXHR);
-    });
-  });
-};
-
 const clearRemote = function(remoteType) {
   const data = {
     op:   'clear',
     name: remoteType,
   };
 
-  return sendRequest(data);
+  return request.send(data);
 };
 
 const saveRemote = function(remoteType) {
@@ -72,7 +43,7 @@ const saveRemote = function(remoteType) {
     name: remoteType,
   };
 
-  return sendRequest(data);
+  return request.send(data);
 };
 
 const flattenData = function(data, remoteConfig) {
@@ -155,7 +126,7 @@ const updateRemote = function(localType) {
       data: chunk,
     };
 
-    sendRequest(data).then(function(resp) {
+    request.send(data).then(function(resp) {
       if (parseInt(resp) !== totalSent) {
         // FIXME: An error has occurred. Retry.
         console.log('bad response');
@@ -216,7 +187,7 @@ const updateLocal = function(localType) {
   };
 
   return new Ember.RSVP.Promise(function(resolve, reject) {
-    sendRequest(params, 'json').then(function(data) {
+    request.send(params, 'json').then(function(data) {
       inflateData(data || [], localType);
 
       resolve(_.values(database[localType]));
