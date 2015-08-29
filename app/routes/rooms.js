@@ -45,7 +45,13 @@ export default Ember.Route.extend({
               let device;
 
               if (!deviceMatches.get('length')) {
-                device = store.createRecord('device', { label: deviceName });
+                device = store.createRecord('device', {
+                  label:    deviceName,
+                  type:     rawDevice.type,
+                  state:    rawDevice.state,
+                  temp:     rawDevice.temperature,
+                  setPoint: rawDevice.setpoint,
+                });
               } else {
                 // FIXME: Should we really be doing this?
                 //        Duplicates shouldn't be introduced.

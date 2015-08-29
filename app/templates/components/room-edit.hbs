@@ -10,7 +10,9 @@
 }}
 
 {{#each room.devices as |device|}}
-  {{device.label}}
+
+  {{device-view device=device}}
+
 {{/each}}
 
 <button {{action 'save'}}>Save</button>
