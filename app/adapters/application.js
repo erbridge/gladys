@@ -123,6 +123,9 @@ const inflateData = function(data, localType) {
   console.log(database);
 };
 
+const requestQueue = [];
+let requestInProgress = false;
+
 const updateRemote = function(localType) {
   const remoteConfig = remoteMap[localType];
 
@@ -148,6 +151,7 @@ const updateRemote = function(localType) {
     sendRequest(data).then(function(resp) {
       if (parseInt(resp) !== totalSent) {
         // FIXME: An error has occurred. Retry.
+        console.log('bad response');
         return;
       }
 
@@ -163,15 +167,30 @@ const updateRemote = function(localType) {
   const rawData    = flattenData(database[localType], remoteConfig);
   const dataString = JSON.stringify(_.values(rawData));
 
-  // FIXME: This doesn't return the right promise.
-  // FIXME: Check this is returning the right response.
-  return clearRemote(remoteType).then(function() {
-    sendChunks(dataString, 0, function() {
+  return new Ember.RSVP.Promise(function(resolve, reject) {
+    requestQueue.push(function() {
+      requestInProgress = true;
+
       // FIXME: Check this is returning the right response.
-      saveRemote(remoteType);
+      clearRemote(remoteType).then(function() {
+        sendChunks(dataString, 0, function() {
+          // FIXME: Check this is returning the right response.
+          saveRemote(remoteType).then(function() {
+            requestInProgress = false;
+
+            resolve();
+          }, reject);
+        }, reject);
+      }, reject);
     });
   });
 };
+
+setInterval(function() {
+  if (!requestInProgress && requestQueue.length) {
+    requestQueue.shift()();
+  }
+}, 100);
 
 const updateLocal = function(localType) {
   const remoteConfig = remoteMap[localType];
