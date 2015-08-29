@@ -117,7 +117,9 @@ const updateRemote = function(localType) {
   const remoteConfig = remoteMap[localType];
 
   if (remoteConfig.skip) {
-    return;
+    return new Ember.RSVP.Promise(function(resolve) {
+      resolve(_.values(database[localType]));
+    });
   }
 
   if (remoteConfig.sendParent) {
@@ -165,7 +167,7 @@ const updateRemote = function(localType) {
           saveRemote(remoteType).then(function() {
             requestInProgress = false;
 
-            resolve();
+            resolve(_.values(database[localType]));
           }, reject);
         }, reject);
       }, reject);
@@ -183,7 +185,9 @@ const updateLocal = function(localType) {
   const remoteConfig = remoteMap[localType];
 
   if (remoteConfig.skip) {
-    return;
+    return new Ember.RSVP.Promise(function(resolve) {
+      resolve(_.values(database[localType]));
+    });
   }
 
   if (remoteConfig.sendParent) {
@@ -227,7 +231,11 @@ export default DS.Adapter.extend({
 
     database[localType][snapshot.id] = data;
 
-    return updateRemote(localType);
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      updateRemote(localType).then(function() {
+        resolve(data);
+      }, reject);
+    });
   },
 
   updateRecord(store, type, snapshot) {
@@ -241,7 +249,11 @@ export default DS.Adapter.extend({
       delete database[localType][snapshot.id];
     }
 
-    return updateRemote(localType);
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      updateRemote(localType).then(function() {
+        resolve(snapshot);
+      }, reject);
+    });
   },
 
   findAll(store, type) {
@@ -266,10 +278,10 @@ export default DS.Adapter.extend({
     const localType = type.toString();
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      updateLocal(localType).then(function() {
+      updateLocal(localType).then(function(data) {
         const records = [];
 
-        _.each(database[localType], function(record) {
+        _.each(data, function(record) {
           const isMatch = _.every(query, function(value, key) {
             return record[key] === value;
           });
