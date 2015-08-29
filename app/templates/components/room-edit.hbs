@@ -9,6 +9,10 @@
   prompt='No Schedule'
 }}
 
+{{#each room.devices as |device|}}
+  {{device.label}}
+{{/each}}
+
 <button {{action 'save'}}>Save</button>
 
 {{yield}}

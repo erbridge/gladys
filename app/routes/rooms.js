@@ -9,31 +9,60 @@ export default Ember.Route.extend({
     const rooms    = roomList.get('rooms');
 
     request.send({ op: 'rooms' }, 'json').then(function(rawRooms) {
-      _.each(rawRooms, function(rawRoom, name) {
+      _.each(rawRooms, function(rawRoom, roomName) {
         // FIXME: Something odd happens with spaces being replaced by +es,
         //        so force it here.
-        name = name.replace(' ', '+');
+        roomName = roomName.replace(' ', '+');
 
-        store.query('room', { label: name }).then(function(matches) {
+        store.query('room', { label: roomName }).then(function(matches) {
+          let room;
+
           if (!matches.get('length')) {
-            rooms.pushObject(store.createRecord('room', { label: name }));
+            room = store.createRecord('room', { label: roomName });
           } else {
-            let match;
-
             // FIXME: Should we really be doing this?
             //        Duplicates shouldn't be introduced.
-            //        Use the name as the ID?
+            //        Use the roomName as the ID?
             matches.forEach(function(matchedRoom) {
-              if (!match) {
-                match = matchedRoom;
+              if (!room) {
+                room = matchedRoom;
               } else {
                 // Remove duplicates.
                 matchedRoom.destroyRecord();
               }
             });
-
-            rooms.pushObject(match);
           }
+
+          rooms.pushObject(room);
+
+          const devices = room.get('devices');
+
+          // FIXME: Don't always recreate it?
+          devices.clear();
+
+          _.each(rawRoom, function(rawDevice, deviceName) {
+            store.query('device', { label: deviceName }).then(function(deviceMatches) {
+              let device;
+
+              if (!deviceMatches.get('length')) {
+                device = store.createRecord('device', { label: deviceName });
+              } else {
+                // FIXME: Should we really be doing this?
+                //        Duplicates shouldn't be introduced.
+                //        Use the deviceName as the ID?
+                matches.forEach(function(matchedDevice) {
+                  if (!device) {
+                    device = matchedDevice;
+                  } else {
+                    // Remove duplicates.
+                    matchedDevice.destroyRecord();
+                  }
+                });
+              }
+
+              devices.pushObject(device);
+            });
+          });
         });
       });
 

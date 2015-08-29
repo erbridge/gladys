@@ -26,6 +26,10 @@ const remoteMap = {
   'gladys@model:room:': {
     type: 'room',
   },
+  'gladys@model:device:': {
+    type:       'device',
+    sendParent: 'gladys@model:room:',
+  },
 };
 
 const clearRemote = function(remoteType) {
