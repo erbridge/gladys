@@ -1,0 +1,14 @@
+{{room.label}}:
+
+{{
+  view 'select'
+  content=allSchedules
+  optionLabelPath='content.label'
+  value=room.activeSchedule
+  selection=room.activeSchedule
+  prompt='No Schedule'
+}}
+
+<button {{action 'save'}}>Save</button>
+
+{{yield}}

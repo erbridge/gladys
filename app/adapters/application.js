@@ -19,6 +19,13 @@ const remoteMap = {
     type:       'event',
     sendParent: 'gladys@model:schedule:',
   },
+  'gladys@model:room-list:': {
+    type: 'room-list',
+    skip: true,
+  },
+  'gladys@model:room:': {
+    type: 'room',
+  },
 };
 
 const sendRequest = function(data, dataType) {
@@ -267,8 +274,25 @@ export default DS.Adapter.extend({
     });
   },
 
-  // TODO
-  query() {
+  query(store, type, query) {
+    const localType = type.toString();
 
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      updateLocal(localType).then(function() {
+        const records = [];
+
+        _.each(database[localType], function(record) {
+          const isMatch = _.every(query, function(value, key) {
+            return record[key] === value;
+          });
+
+          if (isMatch) {
+            records.push(record);
+          }
+        });
+
+        resolve(records);
+      }, reject);
+    });
   },
 });

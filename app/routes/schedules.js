@@ -2,13 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model() {
-    var store = this.store;
+    const store = this.store;
 
-    const list = store.createRecord('schedule-list');
+    const list  = store.createRecord('schedule-list');
+    const model = list.get('schedules');
 
     store.findAll('schedule').then(function(schedules) {
-      const model = list.get('schedules');
-
       schedules.forEach(function(schedule) {
         model.pushObject(schedule);
       });
