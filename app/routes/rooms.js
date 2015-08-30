@@ -54,7 +54,7 @@ export default Ember.Route.extend({
                 // FIXME: Should we really be doing this?
                 //        Duplicates shouldn't be introduced.
                 //        Use the deviceName as the ID?
-                matches.forEach(function(matchedDevice) {
+                deviceMatches.forEach(function(matchedDevice) {
                   if (!device) {
                     device = matchedDevice;
                   } else {
