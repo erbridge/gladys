@@ -6,38 +6,37 @@ const database  = {};
 
 const remoteMap = {
   'gladys@model:schedule-list:': {
-    type: 'schedule-list',
+    type: 'schedule-lists',
     skip: true,
   },
   'gladys@model:schedule:': {
-    type: 'schedule',
+    type: 'schedules',
     flattenDown: {
       events: 'gladys@model:event:',
     },
   },
   'gladys@model:event:': {
-    type:       'event',
+    type:       'events',
     sendParent: 'gladys@model:schedule:',
   },
   'gladys@model:room-list:': {
-    type: 'room-list',
+    type: 'room-lists',
     skip: true,
   },
   'gladys@model:room:': {
-    type: 'room',
+    type: 'rooms',
   },
   'gladys@model:device:': {
-    type: 'device',
+    type: 'devices',
   },
 };
 
 const requestQueue = [];
 let requestInProgress = false;
 
-const clearRemote = function(remoteType) {
+const clearRemote = function() {
   const data = {
-    op:   'clear',
-    name: remoteType,
+    op: 'clear',
   };
 
   return request.send(data);
@@ -157,7 +156,7 @@ const updateRemote = function(localType) {
       requestInProgress = true;
 
       // FIXME: Check this is returning the right response.
-      clearRemote(remoteType).then(function() {
+      clearRemote().then(function() {
         sendChunks(dataString, 0, function() {
           // FIXME: Check this is returning the right response.
           saveRemote(remoteType).then(function() {
