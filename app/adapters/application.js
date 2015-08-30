@@ -25,15 +25,14 @@ const remoteMap = {
   },
   'gladys@model:room:': {
     type: 'room',
-    flattenDown: {
-      events: 'gladys@model:device:',
-    },
   },
   'gladys@model:device:': {
-    type:       'device',
-    sendParent: 'gladys@model:room:',
+    type: 'device',
   },
 };
+
+const requestQueue = [];
+let requestInProgress = false;
 
 const clearRemote = function(remoteType) {
   const data = {
@@ -109,9 +108,6 @@ const inflateData = function(data, localType) {
     database[localType][datum.id] = datum;
   });
 };
-
-const requestQueue = [];
-let requestInProgress = false;
 
 const updateRemote = function(localType) {
   const remoteConfig = remoteMap[localType];

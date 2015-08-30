@@ -52,6 +52,8 @@ export default Ember.Route.extend({
                   temp:     rawDevice.temperature,
                   setPoint: rawDevice.setpoint,
                 });
+
+                device.save();
               } else {
                 // FIXME: Should we really be doing this?
                 //        Duplicates shouldn't be introduced.
