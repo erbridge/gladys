@@ -1,5 +1,23 @@
-{{device.label}}:
-{{device.type}}
-{{device.state}}
-{{device.temp}}
-{{device.setPoint}}
+<div class="device__label">
+  {{device.label}}
+</div>
+
+{{#if (is-equal device.type 'relay')}}
+
+  <div class="device__state">
+    State: {{device.state}}
+  </div>
+
+{{/if}}
+
+{{#if (is-equal device.type 'thermostat')}}
+
+  <div class="device__temp">
+    Current Temp: {{device.temp}}°C
+  </div>
+
+  <div class="device__set-point">
+    Set Point: {{device.setPoint}}°C
+  </div>
+
+{{/if}}

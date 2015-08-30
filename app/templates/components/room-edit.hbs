@@ -9,12 +9,28 @@
   prompt='No Schedule'
 }}
 
-{{#each room.devices as |device|}}
-
-  {{device-view device=device}}
-
-{{/each}}
-
 <button {{action 'save'}}>Save</button>
 
-{{yield}}
+<div class="room__devices">
+
+  {{#each room.devices as |device|}}
+
+    {{#if (is-equal device.type 'relay')}}
+
+      {{device-view device=device}}
+
+    {{/if}}
+
+  {{/each}}
+
+  {{#each room.devices as |device|}}
+
+    {{#if (is-equal device.type 'thermostat')}}
+
+      {{device-view device=device}}
+
+    {{/if}}
+
+  {{/each}}
+
+</div>

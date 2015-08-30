@@ -1,0 +1,9 @@
+.room__devices {
+  display: flex;
+  width: 600px;
+}
+
+.device {
+  flex: 1;
+  border: 1px solid black;
+}
