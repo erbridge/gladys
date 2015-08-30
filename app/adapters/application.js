@@ -175,12 +175,6 @@ const updateRemote = function(localType) {
   });
 };
 
-setInterval(function() {
-  if (!requestInProgress && requestQueue.length) {
-    requestQueue.shift()();
-  }
-}, 100);
-
 const updateLocal = function(localType) {
   const remoteConfig = remoteMap[localType];
 
@@ -204,13 +198,25 @@ const updateLocal = function(localType) {
   }
 
   return new Ember.RSVP.Promise(function(resolve, reject) {
-    request.send(params, 'json').then(function(data) {
-      inflateData(data || [], localType);
+    requestQueue.push(function() {
+      requestInProgress = true;
 
-      resolve(_.values(database[localType]));
-    }, reject);
+      request.send(params, 'json').then(function(data) {
+        inflateData(data || [], localType);
+
+        requestInProgress = false;
+
+        resolve(_.values(database[localType]));
+      }, reject);
+    });
   });
 };
+
+setInterval(function() {
+  if (!requestInProgress && requestQueue.length) {
+    requestQueue.shift()();
+  }
+}, 100);
 
 export default DS.Adapter.extend({
   generateIdForRecord() {
