@@ -10,10 +10,6 @@ export default Ember.Route.extend({
 
     request.send({ op: 'rooms' }, 'json').then(function(rawRooms) {
       _.each(rawRooms, function(rawRoom, roomName) {
-        // FIXME: Something odd happens with spaces being replaced by +es,
-        //        so force it here.
-        roomName = roomName.replace(' ', '+');
-
         store.query('room', { label: roomName }).then(function(matches) {
           let room;
 
@@ -69,13 +65,11 @@ export default Ember.Route.extend({
               }
 
               devices.pushObject(device);
+
+              room.save();
             });
           });
         });
-      });
-
-      rooms.forEach(function(room) {
-        room.save();
       });
     });
 
