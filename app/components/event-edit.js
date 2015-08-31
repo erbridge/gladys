@@ -8,7 +8,9 @@ export default Ember.Component.extend({
 
   style: Ember.computed('event.secondsToday', function() {
     const seconds = this.get('event').get('secondsToday');
-    const top     = 100 * seconds / secondsInDay;
+
+    // FIXME: Account for the element height.
+    const top = 100 * seconds / secondsInDay;
 
     return new Ember.Handlebars.SafeString(`top: ${top}%;`);
   }),

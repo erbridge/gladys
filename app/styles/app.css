@@ -16,9 +16,15 @@
 }
 
 .event {
-  position: absolute;
-  width:    100%;
-  overflow: hidden;
+  position:   absolute;
+  width:      100%;
+  overflow:   hidden;
+  border-top: 1px solid black;
+  cursor:     ns-resize;
+}
+
+.event input {
+  width: 3em;
 }
 
 .room__devices {
