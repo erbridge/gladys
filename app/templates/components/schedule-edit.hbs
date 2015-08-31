@@ -4,10 +4,76 @@
 <button {{action 'save'}}>Save</button>
 <button {{action 'remove'}}>Remove</button>
 
-{{#each schedule.sortedEvents as |event|}}
+<div class="schedule__events">
 
-  {{event-edit event=event}}
+  <div class="schedule__events__day">
 
-{{/each}}
+    {{#each mondayEvents as |event|}}
 
-{{yield}}
+      {{event-edit event=event}}
+
+    {{/each}}
+
+  </div>
+
+  <div class="schedule__events__day">
+
+    {{#each tuesdayEvents as |event|}}
+
+      {{event-edit event=event}}
+
+    {{/each}}
+
+  </div>
+
+  <div class="schedule__events__day">
+
+    {{#each wednesdayEvents as |event|}}
+
+      {{event-edit event=event}}
+
+    {{/each}}
+
+  </div>
+
+  <div class="schedule__events__day">
+
+    {{#each thursdayEvents as |event|}}
+
+      {{event-edit event=event}}
+
+    {{/each}}
+
+  </div>
+
+  <div class="schedule__events__day">
+
+    {{#each fridayEvents as |event|}}
+
+      {{event-edit event=event}}
+
+    {{/each}}
+
+  </div>
+
+  <div class="schedule__events__day">
+
+    {{#each saturdayEvents as |event|}}
+
+      {{event-edit event=event}}
+
+    {{/each}}
+
+  </div>
+
+  <div class="schedule__events__day">
+
+    {{#each sundayEvents as |event|}}
+
+      {{event-edit event=event}}
+
+    {{/each}}
+
+  </div>
+
+</div>

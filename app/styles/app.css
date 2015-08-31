@@ -1,9 +1,31 @@
+.schedule__events {
+  display: flex;
+  width:   500px;
+  height:  500px;
+}
+
+.schedule__events__day {
+  position:       relative;
+  box-sizing:     border-box;
+  display:        flex;
+  flex-direction: column;
+  width:          14%;
+  height:         100%;
+  border:         1px solid black;
+}
+
+.event {
+  position: absolute;
+  width:    100%;
+  overflow: hidden;
+}
+
 .room__devices {
   display: flex;
-  width: 600px;
+  width:   600px;
 }
 
 .device {
-  flex: 1;
+  flex:   1;
   border: 1px solid black;
 }

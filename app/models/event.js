@@ -56,12 +56,16 @@ export default DS.Model.extend({
     },
   }),
 
-  time: Ember.computed('seconds', 'day', {
-    get() {
-      const dayOffset = this.get('day') * secondsInDay;
-      const seconds   = this.get('seconds') - dayOffset;
+  secondsToday: Ember.computed('seconds', 'day', function() {
+    const dayOffset = this.get('day') * secondsInDay;
+    const seconds   = this.get('seconds') - dayOffset;
 
-      const time = moment({ hours: 0 }).seconds(seconds);
+    return seconds;
+  }),
+
+  time: Ember.computed('secondsToday', 'seconds', {
+    get() {
+      const time = moment({ hours: 0 }).seconds(this.get('secondsToday'));
 
       return time.format('HH:mm');
     },

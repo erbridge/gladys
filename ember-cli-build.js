@@ -31,5 +31,15 @@ module.exports = function(defaults) {
     production:  'bower_components/underscore/underscore-min.js',
   });
 
+  app.import({
+    development: 'bower_components/jquery-ui/jquery-ui.js',
+    production:  'bower_components/jquery-ui/jquery-ui.min.js',
+  });
+
+  app.import({
+    development: 'bower_components/jqueryui-touch-punch/jquery.ui.touch-punch.js',
+    production:  'bower_components/jqueryui-touch-punch/jquery.ui.touch-punch.min.js',
+  });
+
   return app.toTree();
 };
