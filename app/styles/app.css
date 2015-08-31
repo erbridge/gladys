@@ -5,9 +5,8 @@
 }
 
 .schedule__events__day {
-  width:          14%;
-  max-width:      180px;
-  height:         100%;
+  width:  150px;
+  height: 100%;
 }
 
 .schedule__events__day__label {
