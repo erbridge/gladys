@@ -7,17 +7,21 @@ export default Ember.Component.extend({
   attributeBindings: [ 'style' ],
 
   style: Ember.computed('event.secondsToday', function() {
-    const seconds = this.get('event.secondsToday');
-
-    // FIXME: Account for the element height.
-    const top     = 100 * seconds / secondsInDay;
-    const topPart = `top: ${top}%`;
-
-    let styleString = '';
+    // Guess at these for the uninitialized.
+    let elHeight     = 42;
+    let parentHeight = 473;
+    let styleString  = '';
 
     if (this.get('element')) {
-      styleString = this.get('element').getAttribute('style');
+      styleString  = this.get('element').getAttribute('style');
+      elHeight     = this.get('element').clientHeight;
+      parentHeight = this.get('element').parentNode.clientHeight;
     }
+
+    const seconds       = this.get('event.secondsToday');
+    const dayProportion = seconds / secondsInDay;
+    const top           = dayProportion * (parentHeight - elHeight);
+    const topPart       = `top: ${top}px`;
 
     if (!styleString) {
       styleString = `${topPart};`;
@@ -65,7 +69,7 @@ export default Ember.Component.extend({
   }),
 
   updateTime(ev, ui) {
-    const dayProportion = ui.position.top / ui.helper.parent().height();
+    const dayProportion = ui.position.top / (ui.helper.parent().height() - ui.helper.height());
 
     this.set('event.secondsToday', Math.round(dayProportion * secondsInDay));
   },
