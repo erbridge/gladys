@@ -7,12 +7,52 @@ export default Ember.Component.extend({
   attributeBindings: [ 'style' ],
 
   style: Ember.computed('event.secondsToday', function() {
-    const seconds = this.get('event').get('secondsToday');
+    const seconds = this.get('event.secondsToday');
 
     // FIXME: Account for the element height.
-    const top = 100 * seconds / secondsInDay;
+    const top     = 100 * seconds / secondsInDay;
+    const topPart = `top: ${top}%`;
 
-    return new Ember.Handlebars.SafeString(`top: ${top}%;`);
+    let styleString = '';
+
+    if (this.get('element')) {
+      styleString = this.get('element').getAttribute('style');
+    }
+
+    if (!styleString) {
+      styleString = `${topPart};`;
+    } else if (styleString.indexOf('top:') < 0) {
+      styleString = `${styleString}; ${topPart};`;
+    } else {
+      const inParts    = styleString.split(';');
+      let outParts     = [];
+      let topPartFound = false;
+
+      _.each(inParts, function(part) {
+        if (part.indexOf('top:') === -1) {
+          outParts.push(part);
+          return;
+        }
+
+        if (topPartFound) {
+          return;
+        }
+
+        topPartFound = true;
+
+        outParts.push(topPart);
+      });
+
+      if (!topPartFound) {
+        outParts.push(topPart);
+      }
+
+      outParts = _.compact(outParts);
+
+      styleString = outParts.join(';') + ';';
+    }
+
+    return new Ember.Handlebars.SafeString(styleString);
   }),
 
   makeDraggable: Ember.on('didInsertElement', function() {
@@ -20,13 +60,14 @@ export default Ember.Component.extend({
       axis:        'y',
       containment: 'parent',
       drag:        this.updateTime.bind(this),
+      stack:       '.event',
     });
   }),
 
   updateTime(ev, ui) {
     const dayProportion = ui.position.top / ui.helper.parent().height();
 
-    this.get('event').set('secondsToday', Math.round(dayProportion * secondsInDay));
+    this.set('event.secondsToday', Math.round(dayProportion * secondsInDay));
   },
 
   actions: {
@@ -35,11 +76,11 @@ export default Ember.Component.extend({
     },
 
     increaseDay() {
-      this.get('event').incrementProperty('day');
+      this.incrementProperty('event.day');
     },
 
     decreaseDay() {
-      this.get('event').decrementProperty('day');
+      this.decrementProperty('event.day');
     },
   },
 });
