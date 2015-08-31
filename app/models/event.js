@@ -56,14 +56,25 @@ export default DS.Model.extend({
     },
   }),
 
-  secondsToday: Ember.computed('seconds', 'day', function() {
-    const dayOffset = this.get('day') * secondsInDay;
-    const seconds   = this.get('seconds') - dayOffset;
+  secondsToday: Ember.computed('seconds', 'day', {
+    get() {
+      const dayOffset    = this.get('day') * secondsInDay;
+      const secondsToday = this.get('seconds') - dayOffset;
 
-    return seconds;
+      return secondsToday;
+    },
+
+    set(key, secondsToday) {
+      const dayOffset = this.get('day') * secondsInDay;
+      const seconds   = secondsToday + dayOffset;
+
+      this.set('seconds', seconds);
+
+      return secondsToday;
+    },
   }),
 
-  time: Ember.computed('secondsToday', 'seconds', {
+  time: Ember.computed('secondsToday', {
     get() {
       const time = moment({ hours: 0 }).seconds(this.get('secondsToday'));
 
@@ -73,7 +84,7 @@ export default DS.Model.extend({
     set(key, time) {
       const duration = moment.duration(time);
 
-      this.set('seconds', duration.asSeconds());
+      this.set('secondsToday', duration.asSeconds());
 
       return time;
     },
