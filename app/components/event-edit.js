@@ -33,5 +33,13 @@ export default Ember.Component.extend({
     remove() {
       this.get('event').deleteRecord();
     },
+
+    increaseDay() {
+      this.get('event').incrementProperty('day');
+    },
+
+    decreaseDay() {
+      this.get('event').decrementProperty('day');
+    },
   },
 });

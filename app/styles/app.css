@@ -16,11 +16,12 @@
 }
 
 .event {
-  position:   absolute;
-  width:      100%;
-  overflow:   hidden;
-  border-top: 1px solid black;
-  cursor:     ns-resize;
+  position:         absolute;
+  width:            100%;
+  overflow:         hidden;
+  border-top:       1px solid black;
+  cursor:           ns-resize;
+  background-color: white;
 }
 
 .event input {
