@@ -1,6 +1,6 @@
 .schedule__events {
   display: flex;
-  width:   500px;
+  width:   100%;
   height:  500px;
 }
 
@@ -10,6 +10,7 @@
   display:        flex;
   flex-direction: column;
   width:          14%;
+  max-width:      180px;
   height:         100%;
   border:         1px solid black;
 }
