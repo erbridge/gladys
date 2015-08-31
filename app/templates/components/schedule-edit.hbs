@@ -8,71 +8,127 @@
 
   <div class="schedule__events__day">
 
-    {{#each mondayEvents as |event|}}
+    <div class="schedule__events__day__label">
+      Monday
+    </div>
 
-      {{event-edit event=event}}
+    <div class="schedule__events__day__events">
 
-    {{/each}}
+      {{#each mondayEvents as |event|}}
 
-  </div>
+        {{event-edit event=event}}
 
-  <div class="schedule__events__day">
+      {{/each}}
 
-    {{#each tuesdayEvents as |event|}}
-
-      {{event-edit event=event}}
-
-    {{/each}}
+    </div>
 
   </div>
 
   <div class="schedule__events__day">
 
-    {{#each wednesdayEvents as |event|}}
+    <div class="schedule__events__day__label">
+      Tuesday
+    </div>
 
-      {{event-edit event=event}}
+    <div class="schedule__events__day__events">
 
-    {{/each}}
+      {{#each tuesdayEvents as |event|}}
 
-  </div>
+        {{event-edit event=event}}
 
-  <div class="schedule__events__day">
+      {{/each}}
 
-    {{#each thursdayEvents as |event|}}
-
-      {{event-edit event=event}}
-
-    {{/each}}
+    </div>
 
   </div>
 
   <div class="schedule__events__day">
 
-    {{#each fridayEvents as |event|}}
+    <div class="schedule__events__day__label">
+      Wednesday
+    </div>
 
-      {{event-edit event=event}}
+    <div class="schedule__events__day__events">
 
-    {{/each}}
+      {{#each wednesdayEvents as |event|}}
 
-  </div>
+        {{event-edit event=event}}
 
-  <div class="schedule__events__day">
+      {{/each}}
 
-    {{#each saturdayEvents as |event|}}
-
-      {{event-edit event=event}}
-
-    {{/each}}
+    </div>
 
   </div>
 
   <div class="schedule__events__day">
 
-    {{#each sundayEvents as |event|}}
+    <div class="schedule__events__day__label">
+      Thursday
+    </div>
 
-      {{event-edit event=event}}
+    <div class="schedule__events__day__events">
 
-    {{/each}}
+      {{#each thursdayEvents as |event|}}
+
+        {{event-edit event=event}}
+
+      {{/each}}
+
+    </div>
+
+  </div>
+
+  <div class="schedule__events__day">
+
+    <div class="schedule__events__day__label">
+      Friday
+    </div>
+
+    <div class="schedule__events__day__events">
+
+      {{#each fridayEvents as |event|}}
+
+        {{event-edit event=event}}
+
+      {{/each}}
+
+    </div>
+
+  </div>
+
+  <div class="schedule__events__day">
+
+    <div class="schedule__events__day__label">
+      Saturday
+    </div>
+
+    <div class="schedule__events__day__events">
+
+      {{#each saturdayEvents as |event|}}
+
+        {{event-edit event=event}}
+
+      {{/each}}
+
+    </div>
+
+  </div>
+
+  <div class="schedule__events__day">
+
+    <div class="schedule__events__day__label">
+      Sunday
+    </div>
+
+    <div class="schedule__events__day__events">
+
+      {{#each sundayEvents as |event|}}
+
+        {{event-edit event=event}}
+
+      {{/each}}
+
+    </div>
 
   </div>
 
