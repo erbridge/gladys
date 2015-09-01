@@ -2,7 +2,7 @@ import Ember from 'ember';
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  label:  DS.attr('string'),
+  label:  DS.attr('string', { defaultValue: 'untitled' }),
   events: DS.hasMany('event', { async: true }),
   rooms:  DS.hasMany('room', { async: true }),
 
