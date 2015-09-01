@@ -60,10 +60,12 @@ export default Ember.Component.extend({
   }),
 
   makeDraggable: Ember.on('didInsertElement', function() {
-    Ember.$(this.element).draggable({
-      axis:        'y',
+    const element = this.get('element');
+
+    Ember.$(element).draggable({
       containment: 'parent',
       drag:        this.updateTime.bind(this),
+      scope:       this.get('scope'),
       stack:       '.event',
     });
   }),
@@ -71,7 +73,10 @@ export default Ember.Component.extend({
   updateTime(ev, ui) {
     const dayProportion = ui.position.top / (ui.helper.parent().height() - ui.helper.height());
 
-    let secondsToday = Math.round(dayProportion * secondsInDay);
+    const granularity = 5 * 60;
+
+    let secondsToday = dayProportion * secondsInDay;
+        secondsToday = Math.round(secondsToday / granularity) * granularity;
         secondsToday = Math.max(secondsToday, 0);
         secondsToday = Math.min(secondsToday, secondsInDay - 1);
 
