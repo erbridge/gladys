@@ -6,8 +6,8 @@ export default Ember.Component.extend({
       this.sendAction('createNewSchedule', this.get('list').get('schedules'));
     },
 
-    createNewEvent(events) {
-      this.sendAction('createNewEvent', events);
+    createNewEvent(events, day) {
+      this.sendAction('createNewEvent', events, day);
     },
   },
 });

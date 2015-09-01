@@ -1,0 +1,15 @@
+<div class="events-day__label">
+
+  {{dayLabel}} <button {{action 'createNewEvent' day}}>+</button>
+
+</div>
+
+<div class="events-day__events">
+
+  {{#each events as |event|}}
+
+    {{event-edit event=event}}
+
+  {{/each}}
+
+</div>

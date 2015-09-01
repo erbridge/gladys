@@ -28,8 +28,8 @@ export default Ember.Component.extend({
       this.get('schedule').destroyRecord();
     },
 
-    createNewEvent() {
-      this.sendAction('createNewEvent', this.get('schedule').get('events'));
+    createNewEvent(day) {
+      this.sendAction('createNewEvent', this.get('schedule').get('events'), day);
     },
   },
 });
