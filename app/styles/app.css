@@ -42,7 +42,8 @@ body {
 }
 
 .event input {
-  width: 3em;
+  width:      3em;
+  text-align: center;
 }
 
 .event__temp {
