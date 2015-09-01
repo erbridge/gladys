@@ -1,24 +1,33 @@
 <br>
 
-<hr>
+{{#if allowEdits}}
 
-<br>
+  <hr>
 
-<label>Label: {{input value=schedule.label}}</label>
+  <br>
 
-<button {{action 'save'}}>Save</button>
-<button {{action 'remove'}}>Remove</button>
+  <label>Label: {{input value=schedule.label}}</label>
 
-<br><br>
+  <button {{action 'save'}}>Save</button>
+  <button {{action 'remove'}}>Remove</button>
+  <button {{action 'done'}}>Done</button>
 
-<div class="schedule__events">
+  <br><br>
 
-  {{events-day dayLabel='Monday' day=0 events=mondayEvents createNewEvent='createNewEvent'}}
-  {{events-day dayLabel='Tuesday' day=1 events=tuesdayEvents createNewEvent='createNewEvent'}}
-  {{events-day dayLabel='Wednesday' day=2 events=wednesdayEvents createNewEvent='createNewEvent'}}
-  {{events-day dayLabel='Thursday' day=3 events=thursdayEvents createNewEvent='createNewEvent'}}
-  {{events-day dayLabel='Friday' day=4 events=fridayEvents createNewEvent='createNewEvent'}}
-  {{events-day dayLabel='Saturday' day=5 events=saturdayEvents createNewEvent='createNewEvent'}}
-  {{events-day dayLabel='Sunday' day=6 events=sundayEvents createNewEvent='createNewEvent'}}
+  <div class="schedule__events">
 
-</div>
+    {{events-day dayLabel='Monday' day=0 events=mondayEvents createNewEvent='createNewEvent'}}
+    {{events-day dayLabel='Tuesday' day=1 events=tuesdayEvents createNewEvent='createNewEvent'}}
+    {{events-day dayLabel='Wednesday' day=2 events=wednesdayEvents createNewEvent='createNewEvent'}}
+    {{events-day dayLabel='Thursday' day=3 events=thursdayEvents createNewEvent='createNewEvent'}}
+    {{events-day dayLabel='Friday' day=4 events=fridayEvents createNewEvent='createNewEvent'}}
+    {{events-day dayLabel='Saturday' day=5 events=saturdayEvents createNewEvent='createNewEvent'}}
+    {{events-day dayLabel='Sunday' day=6 events=sundayEvents createNewEvent='createNewEvent'}}
+
+  </div>
+
+{{else}}
+
+  <button {{action 'edit'}}>{{schedule.label}}</button>
+
+{{/if}}

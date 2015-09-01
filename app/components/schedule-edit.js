@@ -15,7 +15,17 @@ export default Ember.Component.extend({
   saturdayEvents:  Ember.computed.filter('schedule.events.@each.day', isDayEvent(5)),
   sundayEvents:    Ember.computed.filter('schedule.events.@each.day', isDayEvent(6)),
 
+  allowEdits: false,
+
   actions: {
+    edit() {
+      this.set('allowEdits', true);
+    },
+
+    done() {
+      this.set('allowEdits', false);
+    },
+
     save() {
       this.get('schedule').get('events').forEach(function(event) {
         event.save();
