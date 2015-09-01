@@ -11,25 +11,19 @@
 
 <button {{action 'save'}}>Save</button>
 
+Temp: {{room.temp}}
+
 <div class="room__devices">
 
-  {{#each room.devices as |device|}}
+  {{#each room.thermostats as |device|}}
 
-    {{#if (is-equal device.type 'relay')}}
-
-      {{device-view device=device}}
-
-    {{/if}}
+    {{device-view device=device}}
 
   {{/each}}
 
-  {{#each room.devices as |device|}}
+  {{#each room.relays as |device|}}
 
-    {{#if (is-equal device.type 'thermostat')}}
-
-      {{device-view device=device}}
-
-    {{/if}}
+    {{device-view device=device}}
 
   {{/each}}
 
