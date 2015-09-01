@@ -1,3 +1,11 @@
+<div class="room__icon" {{action 'toggleEdit'}}>
+
+  {{room.label}}<br>
+
+  {{room.temp}}°C
+
+</div>
+
 {{#if allowEdits}}
 
   {{room.label}}:
@@ -31,14 +39,10 @@
 
   </div>
 
-{{else}}
+  {{#if room.activeSchedule}}
 
-  <div class="room__icon" {{action 'edit'}}>
+    {{schedule-edit schedule=room.activeSchedule allowEdits=true createNewEvent='createNewEvent'}}
 
-    {{room.label}}<br>
-
-    {{room.temp}}°C
-
-  </div>
+  {{/if}}
 
 {{/if}}

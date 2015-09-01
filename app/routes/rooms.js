@@ -87,4 +87,13 @@ export default Ember.Route.extend({
       scheduleList: scheduleList,
     };
   },
+
+  actions: {
+    createNewEvent(events, day) {
+      const event = this.store.createRecord('event');
+      event.set('day', day);
+
+      events.addObject(event);
+    },
+  },
 });

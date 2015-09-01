@@ -6,16 +6,16 @@ export default Ember.Component.extend({
   allowEdits: false,
 
   actions: {
-    edit() {
-      this.set('allowEdits', true);
-    },
-
-    done() {
-      this.set('allowEdits', false);
+    toggleEdit() {
+      this.toggleProperty('allowEdits');
     },
 
     save() {
       this.get('room').save();
+    },
+
+    createNewEvent(events, day) {
+      this.sendAction('createNewEvent', events, day);
     },
   },
 });
