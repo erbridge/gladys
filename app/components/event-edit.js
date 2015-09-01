@@ -71,7 +71,11 @@ export default Ember.Component.extend({
   updateTime(ev, ui) {
     const dayProportion = ui.position.top / (ui.helper.parent().height() - ui.helper.height());
 
-    this.set('event.secondsToday', Math.round(dayProportion * secondsInDay));
+    let secondsToday = Math.round(dayProportion * secondsInDay);
+        secondsToday = Math.max(secondsToday, 0);
+        secondsToday = Math.min(secondsToday, secondsInDay - 1);
+
+    this.set('event.secondsToday', secondsToday);
   },
 
   actions: {
