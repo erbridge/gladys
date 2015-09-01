@@ -6,7 +6,7 @@
 
   <br>
 
-  <label>Label: {{input value=schedule.label}}</label>
+ {{input value=schedule.label}}
 
   <button {{action 'save'}}>Save</button>
   <button {{action 'remove'}}>Remove</button>
@@ -25,6 +25,10 @@
     {{events-day dayLabel='Sunday' day=6 events=sundayEvents createNewEvent='createNewEvent'}}
 
   </div>
+
+  <br>
+
+  <hr>
 
 {{else}}
 

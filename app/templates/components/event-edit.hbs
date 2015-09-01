@@ -1,8 +1,8 @@
-[{{event.time}}]
+<label class="event__temp">{{input type="number" value=event.temp}}°C</label>
 
-<label>{{input type="number" value=event.temp}}°C</label>
+<span class="event__time">[{{event.time}}]</span>
 
-<button {{action 'remove'}}>X</button><br>
+<button class="event__remove" {{action 'remove'}}>X</button><br>
 
-<button {{action 'decreaseDay'}}>&lt;</button>
-<button {{action 'increaseDay'}}>&gt;</button>
+<button class="event__dec-day" {{action 'decreaseDay'}}>&lt;</button>
+<button class="event__inc-day" {{action 'increaseDay'}}>&gt;</button>

@@ -34,10 +34,19 @@
   border-top:       1px solid black;
   cursor:           ns-resize;
   background-color: white;
+  text-align:       center;
 }
 
 .event input {
   width: 3em;
+}
+
+.event__temp {
+  float: left;
+}
+
+.event__remove {
+  float: right;
 }
 
 .room__devices {
