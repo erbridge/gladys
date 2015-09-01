@@ -1,3 +1,7 @@
+body {
+  font-family: sans-serif;
+}
+
 .schedule__events {
   display:    flex;
   width:      100%;
@@ -7,7 +11,7 @@
 
 .events-day {
   flex:      1 0;
-  min-width: 150px;
+  min-width: 180px;
   height:    100%;
 }
 
