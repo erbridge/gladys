@@ -54,6 +54,18 @@ body {
   float: right;
 }
 
+.rooms {
+  display: flex;
+}
+
+.room__icon {
+  border:     1px solid black;
+  text-align: center;
+  padding:    10px;
+  margin:     5px;
+  cursor:     pointer;
+}
+
 .room__devices {
   display: flex;
   width:   600px;

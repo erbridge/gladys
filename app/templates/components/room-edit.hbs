@@ -1,30 +1,44 @@
-{{room.label}}:
+{{#if allowEdits}}
 
-{{
-  view 'select'
-  content=allSchedules
-  optionLabelPath='content.label'
-  value=room.activeSchedule
-  selection=room.activeSchedule
-  prompt='No Schedule'
-}}
+  {{room.label}}:
 
-<button {{action 'save'}}>Save</button>
+  {{
+    view 'select'
+    content=allSchedules
+    optionLabelPath='content.label'
+    value=room.activeSchedule
+    selection=room.activeSchedule
+    prompt='No Schedule'
+  }}
 
-Temp: {{room.temp}}
+  <button {{action 'save'}}>Save</button>
 
-<div class="room__devices">
+  Temp: {{room.temp}}°C
 
-  {{#each room.thermostats as |device|}}
+  <div class="room__devices">
 
-    {{device-view device=device}}
+    {{#each room.thermostats as |device|}}
 
-  {{/each}}
+      {{device-view device=device}}
 
-  {{#each room.relays as |device|}}
+    {{/each}}
 
-    {{device-view device=device}}
+    {{#each room.relays as |device|}}
 
-  {{/each}}
+      {{device-view device=device}}
 
-</div>
+    {{/each}}
+
+  </div>
+
+{{else}}
+
+  <div class="room__icon" {{action 'edit'}}>
+
+    {{room.label}}<br>
+
+    {{room.temp}}°C
+
+  </div>
+
+{{/if}}

@@ -17,7 +17,7 @@ export default DS.Model.extend({
   temp: Ember.computed('thermostats.@each.label', 'thermostats.@each.temp', function() {
     let temp;
 
-    this.get('devices').forEach(function(device) {
+    this.get('thermostats').forEach(function(device) {
       if (device.get('label').indexOf('Thermostat') !== -1) {
         temp = device.get('temp');
       }
