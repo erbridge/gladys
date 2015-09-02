@@ -88,7 +88,7 @@ export default Ember.Component.extend({
     let secondsToday = dayProportion * secondsInDay;
         secondsToday = Math.round(secondsToday / granularity) * granularity;
         secondsToday = Math.max(secondsToday, 0);
-        secondsToday = Math.min(secondsToday, secondsInDay - 1);
+        secondsToday = Math.min(secondsToday, secondsInDay - granularity);
 
     this.set('event.secondsToday', secondsToday);
   },
