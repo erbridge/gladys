@@ -7,8 +7,8 @@ export default Ember.Component.extend({
   attributeBindings: [ 'style' ],
 
   style: Ember.computed('event.secondsToday', function() {
-    // Guess at these for the uninitialized.
-    let elHeight     = 42;
+    // FIXME: Guess at these for the uninitialized.
+    let elHeight     = 21;
     let parentHeight = 473;
     let styleString  = '';
 
@@ -61,12 +61,22 @@ export default Ember.Component.extend({
 
   makeDraggable: Ember.on('didInsertElement', function() {
     const element = this.get('element');
+    const parent  = element.parentNode;
+
+    // FIXME: This is slightly off.
+    const gridWidth  = parent.offsetWidth;
+    const gridHeight = 1 / 24 / 60 * (parent.clientHeight - element.clientHeight);
 
     Ember.$(element).draggable({
-      containment: 'parent',
-      drag:        this.updateTime.bind(this),
-      scope:       this.get('scope'),
-      stack:       '.event',
+      containment:    this.get('constraint'),
+      grid:           [ gridWidth, gridHeight ],
+      revert:         'invalid',
+      revertDuration: 150,
+      scope:          this.get('scope'),
+      stack:          '.event',
+
+      drag: this.updateTime.bind(this),
+      stop: this.updateDayAndTime.bind(this),
     });
   }),
 
@@ -83,17 +93,17 @@ export default Ember.Component.extend({
     this.set('event.secondsToday', secondsToday);
   },
 
+  updateDayAndTime(ev, ui) {
+    const dayChange = Math.round(ui.position.left / ui.helper.parent().width());
+
+    this.incrementProperty('event.day', dayChange);
+
+    this.updateTime(ev, ui);
+  },
+
   actions: {
     remove() {
       this.get('event').deleteRecord();
-    },
-
-    increaseDay() {
-      this.incrementProperty('event.day');
-    },
-
-    decreaseDay() {
-      this.decrementProperty('event.day');
     },
   },
 });
