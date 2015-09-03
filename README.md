@@ -1,53 +1,71 @@
 # Gladys
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+> Your central heating assistant
 
-## Prerequisites
 
-You will need the following things properly installed on your computer.
+## Development
 
-* [Git](http://git-scm.com/)
-* [Node.js](http://nodejs.org/) (with NPM)
-* [Bower](http://bower.io/)
-* [Ember CLI](http://www.ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
+### Prerequisites
 
-## Installation
+ - [Git](http://git-scm.com/)
+ - [Node.js](http://nodejs.org/) (with NPM)
+ - [Bower](http://bower.io/)
+ - [Ember CLI](http://www.ember-cli.com/)
+ - [PhantomJS](http://phantomjs.org/)
 
-* `git clone <repository-url>` this repository
-* change into the new directory
-* `npm install`
-* `bower install`
 
-## Running / Development
+### Install
 
-* `ember server`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+Change to the project directory, then run:
 
-### Code Generators
+```
+$ npm install
+$ bower install
+```
 
-Make use of the many generators for code, try `ember help generate` for more details
+
+### Run
+
+```
+$ ember serve
+```
+
+Now visit [http://localhost:4200](http://localhost:4200).
+
 
 ### Running Tests
 
-* `ember test`
-* `ember test --server`
+```
+$ ember test
+```
+
 
 ### Building
 
-* `ember build` (development)
-* `ember build --environment production` (production)
+After building, everything you need will be contained within the `dist/` subdirectory.
+
+For development:
+
+```
+$ ember build
+```
+
+For production:
+
+```
+$ ember build --environment=production
+```
+
 
 ### Deploying
 
-Specify what it takes to deploy your app.
+Do a production build then copy the contents of the `dist/` subdirectory to your web server.
+
 
 ## Further Reading / Useful Links
 
-* [ember.js](http://emberjs.com/)
-* [ember-cli](http://www.ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
-
+ - [ember.js](http://emberjs.com/)
+ - [ember-cli](http://www.ember-cli.com/)
+ - Development Browser Extensions
+   - [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
+   - [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
