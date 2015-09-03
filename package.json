@@ -1,7 +1,7 @@
 {
   "name": "gladys",
   "version": "0.0.0",
-  "description": "Small description for gladys goes here",
+  "description": "Your central heating assistant",
   "private": true,
   "directories": {
     "doc": "doc",
@@ -9,14 +9,14 @@
   },
   "scripts": {
     "build": "ember build",
-    "start": "ember server",
+    "start": "ember serve",
     "test": "ember test"
   },
-  "repository": "",
+  "repository": "https://github.com/erbridge/gladys",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Felix Laurie von Massenbach <felix@erbridge.co.uk> (http://erbridge.co.uk/)",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.1.2",
