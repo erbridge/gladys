@@ -33,14 +33,14 @@ $ ember serve
 Now visit [http://localhost:4200](http://localhost:4200).
 
 
-### Running Tests
+### Test
 
 ```
 $ ember test
 ```
 
 
-### Building
+### Build
 
 After building, everything you need will be contained within the `dist/` subdirectory.
 
@@ -57,7 +57,7 @@ $ ember build --environment=production
 ```
 
 
-### Deploying
+### Deploy
 
 Do a production build then copy the contents of the `dist/` subdirectory to your web server.
 
