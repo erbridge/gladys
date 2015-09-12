@@ -2,6 +2,20 @@ body {
   font-family: sans-serif;
 }
 
+.schedules,
+.rooms {
+  display: flex;
+}
+
+.schedule__icon,
+.room__icon {
+  border:     1px solid black;
+  text-align: center;
+  padding:    10px;
+  margin:     5px;
+  cursor:     pointer;
+}
+
 .schedule__events {
   position:   relative;
   display:    flex;
@@ -60,18 +74,6 @@ body {
 
 .event__remove {
   float: right;
-}
-
-.rooms {
-  display: flex;
-}
-
-.room__icon {
-  border:     1px solid black;
-  text-align: center;
-  padding:    10px;
-  margin:     5px;
-  cursor:     pointer;
 }
 
 .room__devices {

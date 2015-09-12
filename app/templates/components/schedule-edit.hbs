@@ -1,4 +1,8 @@
-<br>
+<div class="schedule__icon" {{action 'toggleEdit'}}>
+
+  {{schedule.label}}
+
+</div>
 
 {{#if allowEdits}}
 
@@ -6,11 +10,10 @@
 
   <br>
 
- {{input value=schedule.label}}
+  {{input value=schedule.label}}
 
   <button {{action 'save'}}>Save</button>
   <button {{action 'remove'}}>Remove</button>
-  <button {{action 'done'}}>Done</button>
 
   <br><br>
 
@@ -31,9 +34,5 @@
   <br>
 
   <hr>
-
-{{else}}
-
-  <button {{action 'edit'}}>{{schedule.label}}</button>
 
 {{/if}}

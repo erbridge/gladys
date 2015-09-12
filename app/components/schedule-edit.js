@@ -24,12 +24,8 @@ export default Ember.Component.extend({
   allowEdits: false,
 
   actions: {
-    edit() {
-      this.set('allowEdits', true);
-    },
-
-    done() {
-      this.set('allowEdits', false);
+    toggleEdit() {
+      this.toggleProperty('allowEdits');
     },
 
     save() {
