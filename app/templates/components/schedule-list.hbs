@@ -1,6 +1,6 @@
 {{#each list.schedules as |schedule|}}
 
-  {{schedule-edit schedule=schedule createNewEvent='createNewEvent'}}
+  {{schedule-edit schedule=schedule onInsert='registerComponent' createNewEvent='createNewEvent' disallowAllEdits='disallowAllEdits'}}
 
 {{/each}}
 

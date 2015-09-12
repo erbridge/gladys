@@ -6,8 +6,6 @@
 
 {{#if allowEdits}}
 
-  <hr>
-
   <br>
 
   {{input value=schedule.label}}
@@ -30,9 +28,5 @@
     {{events-day dayLabel='Sunday' day=6 events=sundayEvents scope=scope constraint='.schedule__events__constraint' createNewEvent='createNewEvent'}}
 
   </div>
-
-  <br>
-
-  <hr>
 
 {{/if}}

@@ -23,13 +23,19 @@ export default Ember.Component.extend({
 
   allowEdits: false,
 
+  register: Ember.on('didInsertElement', function() {
+    this.sendAction('onInsert', this);
+  }),
+
   actions: {
     toggleEdit() {
+      this.sendAction('disallowAllEdits', this);
+
       this.toggleProperty('allowEdits');
     },
 
     save() {
-      this.get('schedule').get('events').forEach(function(event) {
+      this.get('schedule.events').forEach(function(event) {
         event.save();
       });
 
@@ -41,7 +47,7 @@ export default Ember.Component.extend({
     },
 
     createNewEvent(day) {
-      this.sendAction('createNewEvent', this.get('schedule').get('events'), day);
+      this.sendAction('createNewEvent', this.get('schedule.events'), day);
     },
   },
 });
