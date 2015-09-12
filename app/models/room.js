@@ -25,4 +25,14 @@ export default DS.Model.extend({
 
     return temp;
   }),
+
+  relayState: Ember.computed('relays.@each.label', 'relays.@each.state', function() {
+    let state;
+
+    this.get('relays').forEach(function(device) {
+      state = device.get('state');
+    });
+
+    return state;
+  }),
 });
