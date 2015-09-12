@@ -5,8 +5,14 @@ export default Ember.Component.extend({
 
   allowEdits: false,
 
+  register: Ember.on('didInsertElement', function() {
+    this.sendAction('onInsert', this);
+  }),
+
   actions: {
     toggleEdit() {
+      this.sendAction('disallowAllEdits', this);
+
       this.toggleProperty('allowEdits');
     },
 
