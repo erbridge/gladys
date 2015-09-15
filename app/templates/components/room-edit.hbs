@@ -2,28 +2,18 @@
 
   {{room.label}}<br>
 
-  {{room.temp}}°C<br>
+  {{#if allowEdits}}
+  {{else}}
 
-  {{room.relayState}}
+    {{room.temp}}°C<br>
+
+    {{room.relayState}}
+
+  {{/if}}
 
 </div>
 
 {{#if allowEdits}}
-
-  {{room.label}}:
-
-  {{
-    view 'select'
-    content=allSchedules
-    optionLabelPath='content.label'
-    value=room.activeSchedule
-    selection=room.activeSchedule
-    prompt='No Schedule'
-  }}
-
-  <button {{action 'save'}}>Save</button>
-
-  Temp: {{room.temp}}°C
 
   <div class="room__devices">
 
@@ -40,6 +30,17 @@
     {{/each}}
 
   </div>
+
+  {{
+    view 'select'
+    content=allSchedules
+    optionLabelPath='content.label'
+    value=room.activeSchedule
+    selection=room.activeSchedule
+    prompt='No Schedule'
+  }}
+
+  <button {{action 'save'}}>Save</button>
 
   {{#if room.activeSchedule}}
 
