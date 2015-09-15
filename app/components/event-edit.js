@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import style from '../utils/style';
 
 const secondsInDay = 86400;
 
@@ -10,10 +11,8 @@ export default Ember.Component.extend({
     // FIXME: Guess at these for the uninitialized.
     let elHeight     = 21;
     let parentHeight = 473;
-    let styleString  = '';
 
     if (this.get('element')) {
-      styleString  = this.get('element').getAttribute('style');
       elHeight     = this.get('element').clientHeight;
       parentHeight = this.get('element').parentNode.clientHeight;
     }
@@ -23,40 +22,7 @@ export default Ember.Component.extend({
     const top           = dayProportion * (parentHeight - elHeight);
     const topPart       = `top: ${top}px`;
 
-    if (!styleString) {
-      styleString = `${topPart};`;
-    } else if (styleString.indexOf('top:') < 0) {
-      styleString = `${styleString}; ${topPart};`;
-    } else {
-      const inParts    = styleString.split(';');
-      let outParts     = [];
-      let topPartFound = false;
-
-      _.each(inParts, function(part) {
-        if (part.indexOf('top:') === -1) {
-          outParts.push(part);
-          return;
-        }
-
-        if (topPartFound) {
-          return;
-        }
-
-        topPartFound = true;
-
-        outParts.push(topPart);
-      });
-
-      if (!topPartFound) {
-        outParts.push(topPart);
-      }
-
-      outParts = _.compact(outParts);
-
-      styleString = outParts.join(';') + ';';
-    }
-
-    return new Ember.Handlebars.SafeString(styleString);
+    return style.modifyAttribute(this.get('element'), topPart, 'top:');
   }),
 
   makeDraggable: Ember.on('didInsertElement', function() {
