@@ -13,7 +13,7 @@ export default Ember.Component.extend({
     let styleString = '';
 
     if (this.get('element')) {
-      styleString = this.get('element').getAttibute('style');
+      styleString = this.get('element').getAttribute('style');
     }
 
     return new Ember.Handlebars.SafeString(styleString);
