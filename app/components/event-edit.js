@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   classNames:        [ 'event' ],
   attributeBindings: [ 'style' ],
 
-  style: Ember.computed('event.secondsToday', function() {
+  style: Ember.computed('event.secondsToday', 'event.temp', function() {
     // FIXME: Guess at these for the uninitialized.
     let elHeight     = 21;
     let parentHeight = 473;
@@ -22,7 +22,12 @@ export default Ember.Component.extend({
     const top           = dayProportion * (parentHeight - elHeight);
     const topPart       = `top: ${top}px`;
 
-    return style.modifyAttribute(this.get('element'), topPart, 'top:');
+    let styleString = style.addTempColours(
+      this.get('element'),
+      this.get('event.temp')
+    ).string;
+
+    return style.modifyString(styleString, topPart, 'top:');
   }),
 
   makeDraggable: Ember.on('didInsertElement', function() {

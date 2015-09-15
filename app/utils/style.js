@@ -22,6 +22,10 @@ export default {
       styleString = element.getAttribute('style');
     }
 
+    return this.modifyString(styleString, property, propertyMatchString);
+  },
+
+  modifyString(styleString, property, propertyMatchString) {
     if (!styleString) {
       styleString = `${property};`;
     } else if (styleString.indexOf(propertyMatchString) < 0) {
