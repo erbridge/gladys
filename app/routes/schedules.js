@@ -4,16 +4,16 @@ export default Ember.Route.extend({
   model() {
     const store = this.store;
 
-    const list  = store.createRecord('schedule-list');
-    const model = list.get('schedules');
+    const scheduleList = store.createRecord('schedule-list');
+    const schedules    = scheduleList.get('schedules');
 
-    store.findAll('schedule').then(function(schedules) {
-      schedules.forEach(function(schedule) {
-        model.pushObject(schedule);
+    store.findAll('schedule').then(function(matches) {
+      matches.forEach(function(schedule) {
+        schedules.pushObject(schedule);
       });
     });
 
-    return list;
+    return scheduleList;
   },
 
   actions: {

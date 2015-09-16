@@ -6,7 +6,7 @@ export default DS.Model.extend({
   events: DS.hasMany('event', { async: true }),
   rooms:  DS.hasMany('room', { async: true }),
 
-  sortedEvents: Ember.computed('events', 'events.@each.seconds', function() {
+  sortedEvents: Ember.computed('events.@each.seconds', function() {
     return this.get('events').sortBy('seconds');
   }),
 });

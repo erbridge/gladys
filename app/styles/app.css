@@ -8,11 +8,16 @@ body {
 }
 
 .schedule__icon,
-.room__icon {
+.room__icon,
+.device {
   border:     1px solid black;
   text-align: center;
   padding:    10px;
   margin:     5px;
+}
+
+.schedule__icon,
+.room__icon {
   cursor:     pointer;
 }
 
@@ -78,10 +83,9 @@ body {
 
 .room__devices {
   display: flex;
-  width:   600px;
 }
 
 .device {
-  flex:   1;
-  border: 1px solid black;
+  flex:      1;
+  min-width: 200px
 }
