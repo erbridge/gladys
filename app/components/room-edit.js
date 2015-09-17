@@ -2,7 +2,8 @@ import Ember from 'ember';
 import style from '../utils/style';
 
 export default Ember.Component.extend({
-  classNames: [ 'room' ],
+  classNames:        [ 'room' ],
+  attributeBindings: [ 'allowEdits:editing' ],
 
   iconStyle: Ember.computed('room.temp', function() {
     return style.addTempColours(this.get('element'), this.get('room.temp'));

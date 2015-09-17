@@ -81,6 +81,10 @@ body {
   float: right;
 }
 
+.room[editing=false] {
+  opacity: 0.6;
+}
+
 .room__devices {
   display: flex;
 }
