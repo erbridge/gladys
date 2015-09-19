@@ -31,23 +31,8 @@
 
   </div>
 
-  {{
-    view 'select'
-    content=allSchedules
-    optionLabelPath='content.label'
-    value=room.activeSchedule
-    selection=room.activeSchedule
-    prompt='No Schedule'
-  }}
-
   <button {{action 'save'}}>Save</button>
 
-  {{#if room.activeSchedule}}
-
-    {{schedule-edit schedule=room.activeSchedule allowEdits=true createNewEvent='createNewEvent'}}
-
-  {{/if}}
-
-  {{schedule-list list=scheduleList createNewSchedule='createNewSchedule' createNewEvent='createNewEvent'}}
+  {{schedule-list list=scheduleList selectedSchedule=room.activeSchedule createNewSchedule='createNewSchedule' createNewEvent='createNewEvent'}}
 
 {{/if}}
