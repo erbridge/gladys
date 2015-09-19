@@ -8,13 +8,18 @@ body {
   flex-wrap: wrap;
 }
 
+.schedule,
+.room,
+.device {
+  margin: 5px;
+}
+
 .schedule__icon,
 .room__icon,
 .device {
   border:     1px solid black;
   text-align: center;
   padding:    10px;
-  margin:     5px;
 }
 
 .schedule__icon,
@@ -82,14 +87,26 @@ body {
   float: right;
 }
 
+.room {
+  min-width: 150px;
+  height:    75px;
+}
+
 .room[editing=true] {
-  order: 1;
+  order:      1;
   flex-basis: 100%;
+  height:     auto;
+}
+
+.room__icon {
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .room[editing=true] .room__icon {
   border-width: 4px;
   border-style: double;
+  margin:       5px;
 }
 
 .room__devices {
