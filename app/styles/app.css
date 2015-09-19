@@ -14,6 +14,29 @@ body {
   margin: 5px;
 }
 
+.schedule,
+.room {
+  min-width: 150px;
+}
+
+.schedule {
+  height: 40px;
+}
+
+.schedule[editing=true],
+.room[editing=true] {
+  order:      1;
+  flex-basis: 100%;
+  height:     auto;
+}
+
+.schedule[editing=true] .schedule__icon,
+.room[editing=true] .room__icon {
+  border-width: 4px;
+  border-style: double;
+  margin:       5px;
+}
+
 .schedule__icon,
 .room__icon,
 .device {
@@ -25,6 +48,8 @@ body {
 .schedule__icon,
 .room__icon {
   cursor:     pointer;
+  height:     100%;
+  box-sizing: border-box;
 }
 
 .schedule__events {
@@ -88,25 +113,7 @@ body {
 }
 
 .room {
-  min-width: 150px;
-  height:    75px;
-}
-
-.room[editing=true] {
-  order:      1;
-  flex-basis: 100%;
-  height:     auto;
-}
-
-.room__icon {
-  height: 100%;
-  box-sizing: border-box;
-}
-
-.room[editing=true] .room__icon {
-  border-width: 4px;
-  border-style: double;
-  margin:       5px;
+  height: 75px;
 }
 
 .room__devices {

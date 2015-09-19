@@ -7,6 +7,9 @@ const isDayEvent = function(day) {
 };
 
 export default Ember.Component.extend({
+  classNames:        [ 'schedule' ],
+  attributeBindings: [ 'allowEdits:editing' ],
+
   mondayEvents:    Ember.computed.filter('schedule.events.@each.day', isDayEvent(0)),
   tuesdayEvents:   Ember.computed.filter('schedule.events.@each.day', isDayEvent(1)),
   wednesdayEvents: Ember.computed.filter('schedule.events.@each.day', isDayEvent(2)),
