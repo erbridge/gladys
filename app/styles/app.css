@@ -82,13 +82,14 @@ body {
   float: right;
 }
 
-.room[editing=false] {
-  opacity: 0.6;
-}
-
 .room[editing=true] {
   order: 1;
   flex-basis: 100%;
+}
+
+.room[editing=true] .room__icon {
+  border-width: 4px;
+  border-style: double;
 }
 
 .room__devices {
