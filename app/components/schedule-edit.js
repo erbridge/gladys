@@ -31,7 +31,9 @@ export default Ember.Component.extend({
   }),
 
   actions: {
-    toggleEdit() {
+    onSelect() {
+      this.sendAction('onSelect', this.get('schedule'));
+
       this.sendAction('disallowAllEdits', this);
 
       this.toggleProperty('allowEdits');

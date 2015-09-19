@@ -16,14 +16,10 @@ export default Ember.Component.extend({
   }),
 
   actions: {
-    toggleEdit() {
+    onSelect() {
       this.sendAction('disallowAllEdits', this);
 
       this.toggleProperty('allowEdits');
-    },
-
-    save() {
-      this.get('room').save();
     },
 
     createNewSchedule(schedules) {
@@ -32,6 +28,12 @@ export default Ember.Component.extend({
 
     createNewEvent(events, day) {
       this.sendAction('createNewEvent', events, day);
+    },
+
+    onScheduleSelect(schedule) {
+      this.set('room.activeSchedule', schedule);
+
+      this.get('room').save();
     },
   },
 });

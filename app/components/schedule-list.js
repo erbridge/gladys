@@ -18,6 +18,10 @@ export default Ember.Component.extend({
       this.sendAction('createNewEvent', events, day);
     },
 
+    onScheduleSelect(schedule) {
+      this.sendAction('onScheduleSelect', schedule);
+    },
+
     disallowAllEdits(componentToSkip) {
       this.get('childComponents').forEach(function(component) {
         if (component === componentToSkip) {

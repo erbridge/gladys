@@ -1,4 +1,4 @@
-<div class="room__icon" {{action 'toggleEdit'}} style={{iconStyle}}>
+<div class="room__icon" {{action 'onSelect'}} style={{iconStyle}}>
 
   {{room.label}}<br>
 
@@ -31,8 +31,6 @@
 
   </div>
 
-  <button {{action 'save'}}>Save</button>
-
-  {{schedule-list list=scheduleList selectedSchedule=room.activeSchedule createNewSchedule='createNewSchedule' createNewEvent='createNewEvent'}}
+  {{schedule-list list=scheduleList selectedSchedule=room.activeSchedule createNewSchedule='createNewSchedule' createNewEvent='createNewEvent' onScheduleSelect='onScheduleSelect'}}
 
 {{/if}}
