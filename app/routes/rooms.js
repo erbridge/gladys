@@ -96,6 +96,13 @@ export default Ember.Route.extend({
   },
 
   actions: {
+    createNewSchedule(schedules) {
+      const schedule = this.store.createRecord('schedule');
+      schedule.save();
+
+      schedules.addObject(schedule);
+    },
+
     createNewEvent(events, day) {
       const event = this.store.createRecord('event');
       event.set('day', day);

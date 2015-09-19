@@ -26,6 +26,10 @@ export default Ember.Component.extend({
       this.get('room').save();
     },
 
+    createNewSchedule(schedules) {
+      this.sendAction('createNewSchedule', schedules);
+    },
+
     createNewEvent(events, day) {
       this.sendAction('createNewEvent', events, day);
     },

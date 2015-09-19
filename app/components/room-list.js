@@ -14,6 +14,10 @@ export default Ember.Component.extend({
       this.get('childComponents').remove(component);
     },
 
+    createNewSchedule(schedules) {
+      this.sendAction('createNewSchedule', schedules);
+    },
+
     createNewEvent(events, day) {
       this.sendAction('createNewEvent', events, day);
     },
