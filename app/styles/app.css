@@ -5,6 +5,7 @@ body {
 .schedules,
 .rooms {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .schedule__icon,
@@ -83,6 +84,11 @@ body {
 
 .room[editing=false] {
   opacity: 0.6;
+}
+
+.room[editing=true] {
+  order: 1;
+  flex-basis: 100%;
 }
 
 .room__devices {
