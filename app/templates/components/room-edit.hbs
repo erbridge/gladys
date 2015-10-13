@@ -33,14 +33,18 @@
 
   </div>
 
-  {{schedule-list
-    list=scheduleList
-    selectedSchedule=room.activeSchedule
-    schedulesAreSettable=true
-    createNewSchedule='createNewSchedule'
-    createNewEvent='createNewEvent'
-    onScheduleSelect='onScheduleSelect'
-    onScheduleSet='onScheduleSet'
-  }}
+  {{#if scheduleList}}
+
+    {{schedule-list
+      list=scheduleList
+      selectedSchedule=room.activeSchedule
+      schedulesAreSettable=true
+      createNewSchedule='createNewSchedule'
+      createNewEvent='createNewEvent'
+      onScheduleSelect='onScheduleSelect'
+      onScheduleSet='onScheduleSet'
+    }}
+
+  {{/if}}
 
 {{/if}}

@@ -1,8 +1,13 @@
 import Ember from 'ember';
+import room from '../utils/room';
 
 export default Ember.Route.extend({
   model() {
     const store = this.store;
+
+    const roomList = store.createRecord('room-list');
+
+    room.populate(store, roomList.get('rooms'));
 
     const scheduleList = store.createRecord('schedule-list');
     const schedules    = scheduleList.get('schedules');
@@ -13,7 +18,10 @@ export default Ember.Route.extend({
       });
     });
 
-    return scheduleList;
+    return {
+      roomList:     roomList,
+      scheduleList: scheduleList,
+    };
   },
 
   actions: {
