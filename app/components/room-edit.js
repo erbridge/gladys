@@ -3,7 +3,7 @@ import style from '../utils/style';
 
 export default Ember.Component.extend({
   classNames:        [ 'room' ],
-  attributeBindings: [ 'allowEdits:editing', 'usesEditedSchedule:active' ],
+  attributeBindings: [ 'allowEdits:editing', 'usesEditedSchedule:highlighted' ],
 
   iconStyle: Ember.computed('room.temp', function() {
     return style.addTempColours(this.get('element'), this.get('room.temp'));

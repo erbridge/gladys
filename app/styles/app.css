@@ -37,8 +37,8 @@ body {
   margin:       5px;
 }
 
-.schedule[active=false] .schedule__icon,
-.room[active=false] .room__icon {
+.schedule[highlighted=false] .schedule__icon,
+.room[highlighted=false] .room__icon {
   opacity: 0.6;
 }
 
