@@ -8,7 +8,11 @@
 
   {{#each events as |event|}}
 
-    {{event-edit event=event scope=scope constraint=constraint}}
+    {{event-edit
+      event=event
+      scope=scope
+      constraint=constraint
+    }}
 
   {{/each}}
 
