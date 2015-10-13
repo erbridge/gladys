@@ -8,6 +8,14 @@
 
   <br>
 
+  {{#if isSettable}}
+
+    <button {{action 'set'}}>Activate for this Room</button>
+
+    <br><br>
+
+  {{/if}}
+
   {{input value=schedule.label}}
 
   <button {{action 'save'}}>Save</button>

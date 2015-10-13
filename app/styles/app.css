@@ -23,11 +23,6 @@ body {
   height: 40px;
 }
 
-.schedule[active=false],
-.room[active=false] {
-  opacity: 0.6;
-}
-
 .schedule[editing=true],
 .room[editing=true] {
   order:      1;
@@ -40,6 +35,11 @@ body {
   border-width: 4px;
   border-style: double;
   margin:       5px;
+}
+
+.schedule[active=false] .schedule__icon,
+.room[active=false] .room__icon {
+  opacity: 0.6;
 }
 
 .schedule__icon,

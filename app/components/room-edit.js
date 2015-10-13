@@ -47,11 +47,13 @@ export default Ember.Component.extend({
     },
 
     onScheduleSelect(schedule) {
+      this.sendAction('onScheduleSelect', schedule);
+    },
+
+    onScheduleSet(schedule) {
       this.set('room.activeSchedule', schedule);
 
       this.get('room').save();
-
-      this.sendAction('onScheduleSelect', schedule);
     },
   },
 });

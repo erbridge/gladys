@@ -1,6 +1,6 @@
 {{#each list.schedules as |schedule|}}
 
-  {{schedule-edit schedule=schedule allowEdits=(is-equal schedule.id selectedSchedule.id) onInsert='registerComponent' onSelect='onScheduleSelect' createNewEvent='createNewEvent' disallowAllEdits='disallowAllEdits'}}
+  {{schedule-edit schedule=schedule allowEdits=(is-equal schedule.id selectedSchedule.id) isSettable=schedulesAreSettable onInsert='registerComponent' onSelect='onScheduleSelect' onSet='onScheduleSet' createNewEvent='createNewEvent' disallowAllEdits='disallowAllEdits'}}
 
 {{/each}}
 

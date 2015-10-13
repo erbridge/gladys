@@ -39,6 +39,10 @@ export default Ember.Component.extend({
       this.toggleProperty('allowEdits');
     },
 
+    set() {
+      this.sendAction('onSet', this.get('schedule'));
+    },
+
     save() {
       this.get('schedule.events').forEach(function(event) {
         event.save();

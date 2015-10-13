@@ -22,6 +22,10 @@ export default Ember.Component.extend({
       this.sendAction('onScheduleSelect', schedule);
     },
 
+    onScheduleSet(schedule) {
+      this.sendAction('onScheduleSet', schedule);
+    },
+
     disallowAllEdits(componentToSkip) {
       this.get('childComponents').forEach(function(component) {
         if (component === componentToSkip) {
