@@ -23,6 +23,11 @@ body {
   height: 40px;
 }
 
+.schedule[active=false],
+.room[active=false] {
+  opacity: 0.6;
+}
+
 .schedule[editing=true],
 .room[editing=true] {
   order:      1;

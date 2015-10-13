@@ -35,5 +35,9 @@ export default Ember.Component.extend({
         component.set('allowEdits', false);
       });
     },
+
+    setEditedSchedule(schedule) {
+      this.set('editedSchedule', schedule);
+    },
   },
 });

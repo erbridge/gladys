@@ -1,5 +1,5 @@
 {{#each list.rooms as |room|}}
 
-  {{room-edit room=room scheduleList=scheduleList onInsert='registerComponent' createNewSchedule='createNewSchedule' createNewEvent='createNewEvent' disallowAllEdits='disallowAllEdits'}}
+  {{room-edit room=room scheduleList=scheduleList editedSchedule=editedSchedule onInsert='registerComponent' createNewSchedule='createNewSchedule' createNewEvent='createNewEvent' disallowAllEdits='disallowAllEdits' onScheduleSelect='setEditedSchedule'}}
 
 {{/each}}
