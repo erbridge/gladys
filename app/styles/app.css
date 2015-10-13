@@ -57,6 +57,10 @@ body {
   box-sizing: border-box;
 }
 
+.schedule .room__icon {
+  cursor: auto;
+}
+
 .schedule__events {
   position:   relative;
   display:    flex;

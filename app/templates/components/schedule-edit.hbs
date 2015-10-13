@@ -92,10 +92,14 @@
 
   </div>
 
-  {{!-- {{#if roomList}}
+  {{#if roomList}}
 
-    {{room-list list=roomList}}
+    {{room-list
+      list=roomList
+      editedSchedule=schedule
+      readOnly=true
+    }}
 
-  {{/if}} --}}
+  {{/if}}
 
 {{/if}}
