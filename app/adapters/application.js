@@ -214,6 +214,8 @@ setInterval(function() {
 }, 100);
 
 export default DS.Adapter.extend({
+  coalesceFindRequests: true,
+
   generateIdForRecord() {
     return cuid();
   },
