@@ -44,19 +44,17 @@ export default Ember.Component.extend({
     },
 
     save() {
-      this.get('schedule.events').forEach(function(event) {
-        event.save();
-      });
-
       this.get('schedule').save();
     },
 
-    remove() {
+    destroy() {
       this.get('schedule').destroyRecord();
     },
 
     createNewEvent(day) {
       this.sendAction('createNewEvent', this.get('schedule.events'), day);
+
+      this.get('schedule').save();
     },
   },
 });

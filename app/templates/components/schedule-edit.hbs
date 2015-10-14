@@ -16,10 +16,9 @@
 
   {{/if}}
 
-  {{input value=schedule.label}}
+  {{input type='text' value=schedule.label focus-out='save'}}
 
-  <button {{action 'save'}}>Save</button>
-  <button {{action 'remove'}}>Remove</button>
+  <button {{action 'destroy'}}>Delete</button>
 
   <br><br>
 

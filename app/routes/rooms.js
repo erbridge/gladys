@@ -27,6 +27,7 @@ export default Ember.Route.extend({
   actions: {
     createNewSchedule(schedules) {
       const schedule = this.store.createRecord('schedule');
+
       schedule.save();
 
       schedules.addObject(schedule);
@@ -34,7 +35,9 @@ export default Ember.Route.extend({
 
     createNewEvent(events, day) {
       const event = this.store.createRecord('event');
+
       event.set('day', day);
+      event.save();
 
       events.addObject(event);
     },
