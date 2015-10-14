@@ -108,7 +108,7 @@ const inflateData = function(data, localType) {
   });
 };
 
-const updateRemote = function(localType) {
+const updateRemote = function(localType, retryCount=5) {
   const remoteConfig = remoteMap[localType];
 
   if (remoteConfig.skip) {
@@ -132,19 +132,35 @@ const updateRemote = function(localType) {
       data: chunk,
     };
 
-    request.send(data).then(function(resp) {
-      if (parseInt(resp) !== totalSent) {
-        // FIXME: An error has occurred. Retry.
-        console.log('bad response');
-        return;
-      }
+    const attemptSend = function() {
+      request.send(data).then(function(resp) {
+        if (parseInt(resp) !== totalSent) {
+          console.log('bad response');
 
-      if (remainder) {
-        sendChunks(remainder, totalSent, doneCallback);
-      } else {
-        doneCallback(totalSent);
-      }
-    });
+          if (retryCount > 0) {
+            console.log('retrying');
+
+            retryCount--;
+
+            setTimeout(function() {
+              attemptSend();
+            }, 500);
+          } else {
+            console.log('rejecting');
+          }
+
+          return;
+        }
+
+        if (remainder) {
+          sendChunks(remainder, totalSent, doneCallback);
+        } else {
+          doneCallback(totalSent);
+        }
+      });
+    };
+
+    attemptSend();
   };
 
   const remoteType = remoteMap[localType].type;
