@@ -178,10 +178,18 @@ const updateRemote = function(localType, retryCount=5) {
           saveRemote(remoteType).then(function() {
             requestInProgress = false;
 
-            resolve(_.values(database[localType]));
-          }, reject);
-        }, reject);
-      }, reject);
+            Ember.run(null, resolve, _.values(database[localType]));
+          }, function(jqXHR) {
+            requestInProgress = false;
+
+            Ember.run(null, reject, jqXHR);
+          });
+        });
+      }, function(jqXHR) {
+        requestInProgress = false;
+
+        Ember.run(null, reject, jqXHR);
+      });
     });
   });
 };
@@ -191,7 +199,7 @@ const updateLocal = function(localType) {
 
   if (remoteConfig.skip) {
     return new Ember.RSVP.Promise(function(resolve) {
-      resolve(_.values(database[localType]));
+      Ember.run(null, resolve, _.values(database[localType]));
     });
   }
 
@@ -217,8 +225,10 @@ const updateLocal = function(localType) {
 
         requestInProgress = false;
 
-        resolve(_.values(database[localType]));
-      }, reject);
+        Ember.run(null, resolve, _.values(database[localType]));
+      }, function(jqXHR) {
+        Ember.run(null, reject, jqXHR);
+      });
     });
   });
 };
@@ -252,8 +262,10 @@ export default DS.Adapter.extend({
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
       updateRemote(localType).then(function() {
-        resolve(data);
-      }, reject);
+        Ember.run(null, resolve, data);
+      }, function(jqXHR) {
+        Ember.run(null, reject, jqXHR);
+      });
     });
   },
 
@@ -270,8 +282,10 @@ export default DS.Adapter.extend({
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
       updateRemote(localType).then(function() {
-        resolve(snapshot);
-      }, reject);
+        Ember.run(null, resolve, snapshot);
+      }, function(jqXHR) {
+        Ember.run(null, reject, jqXHR);
+      });
     });
   },
 
@@ -288,8 +302,10 @@ export default DS.Adapter.extend({
 
     return new Ember.RSVP.Promise(function(resolve, reject) {
       updateLocal(localType).then(function() {
-        resolve(database[localType][id]);
-      }, reject);
+        Ember.run(null, resolve, database[localType][id]);
+      }, function(jqXHR) {
+        Ember.run(null, reject, jqXHR);
+      });
     });
   },
 
@@ -310,8 +326,10 @@ export default DS.Adapter.extend({
           }
         });
 
-        resolve(records);
-      }, reject);
+        Ember.run(null, resolve, records);
+      }, function(jqXHR) {
+        Ember.run(null, reject, jqXHR);
+      });
     });
   },
 });
