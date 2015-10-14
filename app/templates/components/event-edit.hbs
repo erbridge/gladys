@@ -1,5 +1,5 @@
-<label class="event__temp">{{input type="number" value=event.temp}}°C</label>
+<label class="event__temp">{{input type='number' value=event.temp focus-out='save'}}°C</label>
 
-<span class="event__time">{{input value=event.time}}</span>
+<span class="event__time">{{input value=event.time focus-out='save'}}</span>
 
 <button class="event__remove" {{action 'remove'}}>X</button>

@@ -47,7 +47,11 @@ export default Ember.Component.extend({
       stack:          '.event',
 
       drag: this.updateTime.bind(this),
-      stop: this.updateDayAndTime.bind(this),
+      stop: function(ev, ui) {
+        this.updateDayAndTime(ev, ui);
+
+        this.save();
+      }.bind(this),
     });
   }),
 
@@ -72,9 +76,17 @@ export default Ember.Component.extend({
     this.updateTime(ev, ui);
   },
 
+  save() {
+    this.get('event').save();
+  },
+
   actions: {
     remove() {
       this.get('event').deleteRecord();
+    },
+
+    save() {
+      this.save();
     },
   },
 });
