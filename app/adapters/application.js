@@ -108,7 +108,7 @@ const inflateData = function(data, localType) {
   });
 };
 
-const updateRemote = function(localType, retryCount=5) {
+const updateRemote = function(localType) {
   const remoteConfig = remoteMap[localType];
 
   if (remoteConfig.skip) {
@@ -121,7 +121,7 @@ const updateRemote = function(localType, retryCount=5) {
     return updateRemote(remoteConfig.sendParent);
   }
 
-  const sendChunks = function(dataString, totalSent, doneCallback) {
+  const sendChunks = function(dataString, totalSent, doneCallback, errCallback) {
     const chunk     = dataString.slice(0, 4000);
     const remainder = dataString.slice(4000);
 
@@ -132,35 +132,20 @@ const updateRemote = function(localType, retryCount=5) {
       data: chunk,
     };
 
-    const attemptSend = function() {
-      request.send(data).then(function(resp) {
-        if (parseInt(resp) !== totalSent) {
-          console.log('bad response');
+    request.send(data).then(function(resp) {
+      if (parseInt(resp) !== totalSent) {
+        console.log('bad response');
 
-          if (retryCount > 0) {
-            console.log('retrying');
+        errCallback(resp);
+        return;
+      }
 
-            retryCount--;
-
-            setTimeout(function() {
-              attemptSend();
-            }, 500);
-          } else {
-            console.log('rejecting');
-          }
-
-          return;
-        }
-
-        if (remainder) {
-          sendChunks(remainder, totalSent, doneCallback);
-        } else {
-          doneCallback(totalSent);
-        }
-      });
-    };
-
-    attemptSend();
+      if (remainder) {
+        sendChunks(remainder, totalSent, doneCallback);
+      } else {
+        doneCallback(totalSent);
+      }
+    }, errCallback);
   };
 
   const remoteType = remoteMap[localType].type;
@@ -184,6 +169,10 @@ const updateRemote = function(localType, retryCount=5) {
 
             Ember.run(null, reject, jqXHR);
           });
+        }, function(jqXHR) {
+          requestInProgress = false;
+
+          Ember.run(null, reject, jqXHR);
         });
       }, function(jqXHR) {
         requestInProgress = false;
