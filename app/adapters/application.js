@@ -39,7 +39,18 @@ const clearRemote = function() {
     op: 'clear',
   };
 
-  return request.send(data);
+  return new Ember.RSVP.Promise(function(resolve, reject) {
+    request.send(data).then(function(data) {
+      if (data !== 'OK') {
+        Ember.run(null, reject, data);
+        return;
+      }
+
+      Ember.run(null, resolve);
+    }, function(jqXHR) {
+      Ember.run(null, reject, jqXHR);
+    });
+  });
 };
 
 const saveRemote = function(remoteType) {
@@ -48,7 +59,18 @@ const saveRemote = function(remoteType) {
     name: remoteType,
   };
 
-  return request.send(data);
+  return new Ember.RSVP.Promise(function(resolve, reject) {
+    request.send(data).then(function(data) {
+      if (data !== 'OK') {
+        Ember.run(null, reject, data);
+        return;
+      }
+
+      Ember.run(null, resolve);
+    }, function(jqXHR) {
+      Ember.run(null, reject, jqXHR);
+    });
+  });
 };
 
 const flattenData = function(data, remoteConfig) {
