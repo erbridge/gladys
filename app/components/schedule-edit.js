@@ -33,7 +33,7 @@ export default Ember.Component.extend({
     }
 
     if (!activeSchedule) {
-      return true;
+      return false;
     }
 
     return false;
