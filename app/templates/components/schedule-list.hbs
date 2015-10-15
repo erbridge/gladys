@@ -3,6 +3,7 @@
   {{schedule-edit
     schedule=schedule
     roomList=roomList
+    activeSchedule=selectedSchedule
     allowEdits=(is-equal schedule.id selectedSchedule.id)
     isSettable=schedulesAreSettable
     onInsert='registerComponent'

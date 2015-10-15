@@ -39,7 +39,15 @@ body {
   margin:       5px;
 }
 
-.schedule[highlighted=false] .schedule__icon,
+.schedule[highlighted=true] .schedule__icon {
+  border-width: 2px;
+  border-color: blue;
+}
+
+.schedule[editing=true][highlighted=true] .schedule__icon {
+  border-width: 6px;
+}
+
 .room[highlighted=false] .room__icon {
   opacity: 0.6;
 }

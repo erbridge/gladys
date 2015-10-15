@@ -8,7 +8,7 @@ const isDayEvent = function(day) {
 
 export default Ember.Component.extend({
   classNames:        [ 'schedule' ],
-  attributeBindings: [ 'allowEdits:editing' ],
+  attributeBindings: [ 'allowEdits:editing', 'isActiveSchedule:highlighted' ],
 
   mondayEvents:    Ember.computed.filter('schedule.events.@each.day', isDayEvent(0)),
   tuesdayEvents:   Ember.computed.filter('schedule.events.@each.day', isDayEvent(1)),
@@ -22,6 +22,21 @@ export default Ember.Component.extend({
     const id = this.get('schedule.id');
 
     return `schedule-${id}`;
+  }),
+
+  isActiveSchedule: Ember.computed('schedule', 'activeSchedule', function() {
+    var schedule       = this.get('schedule');
+    var activeSchedule = this.get('activeSchedule');
+
+    if (schedule && activeSchedule) {
+      return schedule.get('id') === activeSchedule.get('id');
+    }
+
+    if (!activeSchedule) {
+      return true;
+    }
+
+    return false;
   }),
 
   allowEdits: false,
