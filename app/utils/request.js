@@ -16,16 +16,14 @@ export default {
       }
 
       console.log(data);
-      console.log(config);
 
       const attemptSend = function() {
         Ember.$.ajax(config).then(function(data) {
-          console.log(data);
+          console.log('success');
 
           Ember.run(null, resolve, data);
         }, function(jqXHR) {
           console.log('error');
-          console.log(jqXHR);
 
           if (retryCount > 0) {
             console.log('retrying');

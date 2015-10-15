@@ -42,12 +42,18 @@ const clearRemote = function() {
   return new Ember.RSVP.Promise(function(resolve, reject) {
     request.send(data).then(function(data) {
       if (data !== 'OK') {
+        console.log('rejecting clear');
+
         Ember.run(null, reject, data);
         return;
       }
 
+      console.log('successful clear');
+
       Ember.run(null, resolve);
     }, function(jqXHR) {
+      console.log('rejecting clear');
+
       Ember.run(null, reject, jqXHR);
     });
   });
@@ -62,12 +68,18 @@ const saveRemote = function(remoteType, expectedResponse) {
   return new Ember.RSVP.Promise(function(resolve, reject) {
     request.send(data).then(function(data) {
       if (data !== expectedResponse) {
+        console.log('rejecting save');
+
         Ember.run(null, reject, data);
         return;
       }
 
+      console.log('successful save');
+
       Ember.run(null, resolve, data);
     }, function(jqXHR) {
+      console.log('rejecting save');
+
       Ember.run(null, reject, jqXHR);
     });
   });
@@ -156,8 +168,6 @@ const updateRemote = function(localType) {
 
     request.send(data).then(function(resp) {
       if (parseInt(resp) !== totalSent) {
-        console.log('bad response');
-
         errCallback(resp);
         return;
       }
@@ -180,6 +190,8 @@ const updateRemote = function(localType) {
 
       clearRemote().then(function() {
         sendChunks(dataString, 0, function(totalSent) {
+          console.log('successful append');
+
           saveRemote(remoteType, totalSent.toString()).then(function() {
             requestInProgress = false;
 
@@ -190,6 +202,8 @@ const updateRemote = function(localType) {
             Ember.run(null, reject, jqXHR);
           });
         }, function(jqXHR) {
+          console.log('rejecting append');
+
           requestInProgress = false;
 
           Ember.run(null, reject, jqXHR);
@@ -230,12 +244,16 @@ const updateLocal = function(localType) {
       requestInProgress = true;
 
       request.send(params, 'json').then(function(data) {
+        console.log('successful get');
+
         inflateData(data || [], localType);
 
         requestInProgress = false;
 
         Ember.run(null, resolve, _.values(database[localType]));
       }, function(jqXHR) {
+        console.log('rejecting get');
+
         Ember.run(null, reject, jqXHR);
       });
     });
