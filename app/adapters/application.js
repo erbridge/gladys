@@ -53,7 +53,7 @@ const clearRemote = function() {
   });
 };
 
-const saveRemote = function(remoteType) {
+const saveRemote = function(remoteType, expectedResponse) {
   const data = {
     op:   'save',
     name: remoteType,
@@ -61,12 +61,12 @@ const saveRemote = function(remoteType) {
 
   return new Ember.RSVP.Promise(function(resolve, reject) {
     request.send(data).then(function(data) {
-      if (data !== 'OK') {
+      if (data !== expectedResponse) {
         Ember.run(null, reject, data);
         return;
       }
 
-      Ember.run(null, resolve);
+      Ember.run(null, resolve, data);
     }, function(jqXHR) {
       Ember.run(null, reject, jqXHR);
     });
@@ -178,11 +178,9 @@ const updateRemote = function(localType) {
     requestQueue.push(function() {
       requestInProgress = true;
 
-      // FIXME: Check this is returning the right response.
       clearRemote().then(function() {
-        sendChunks(dataString, 0, function() {
-          // FIXME: Check this is returning the right response.
-          saveRemote(remoteType).then(function() {
+        sendChunks(dataString, 0, function(totalSent) {
+          saveRemote(remoteType, totalSent.toString()).then(function() {
             requestInProgress = false;
 
             Ember.run(null, resolve, _.values(database[localType]));
