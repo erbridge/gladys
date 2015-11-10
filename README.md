@@ -1,4 +1,4 @@
-# Gladys
+# Iris
 
 > Your central heating assistant
 

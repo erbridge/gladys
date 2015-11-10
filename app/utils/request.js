@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const remoteUrl = 'http://192.168.1.31/cgi-bin/cmh/gladys_relay.sh/';
+const remoteUrl = 'http://192.168.1.31/cgi-bin/cmh/iris_relay.sh/';
 
 export default {
   send(data, dataType, retryCount=5) {

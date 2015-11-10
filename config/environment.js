@@ -2,7 +2,7 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'gladys',
+    modulePrefix: 'iris',
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
@@ -50,7 +50,7 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.baseURL = '/cgi-bin/cmh/gladys_get.sh/';
+    ENV.baseURL = '/cgi-bin/cmh/iris_get.sh/';
   }
 
   return ENV;

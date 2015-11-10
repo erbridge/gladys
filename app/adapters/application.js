@@ -5,28 +5,28 @@ import request from '../utils/request';
 const database  = {};
 
 const remoteMap = {
-  'gladys@model:schedule-list:': {
+  'iris@model:schedule-list:': {
     type: 'schedule-lists',
     skip: true,
   },
-  'gladys@model:schedule:': {
+  'iris@model:schedule:': {
     type: 'schedules',
     flattenDown: {
-      events: 'gladys@model:event:',
+      events: 'iris@model:event:',
     },
   },
-  'gladys@model:event:': {
+  'iris@model:event:': {
     type:       'events',
-    sendParent: 'gladys@model:schedule:',
+    sendParent: 'iris@model:schedule:',
   },
-  'gladys@model:room-list:': {
+  'iris@model:room-list:': {
     type: 'room-lists',
     skip: true,
   },
-  'gladys@model:room:': {
+  'iris@model:room:': {
     type: 'rooms',
   },
-  'gladys@model:device:': {
+  'iris@model:device:': {
     type: 'devices',
   },
 };
