@@ -77,5 +77,17 @@ export default Ember.Component.extend({
 
       this.get('schedule').save();
     },
+
+    copyDay(sourceDay, targetDay) {
+      this.get('schedule.events').forEach(function(event) {
+        if (event.get('day') !== sourceDay) {
+          return;
+        }
+
+        this.sendAction('copyEvent', this.get('schedule.events'), event, targetDay);
+      }.bind(this));
+
+      this.get('schedule').save();
+    },
   },
 });

@@ -10,8 +10,14 @@ export default Ember.Component.extend({
   }),
 
   actions: {
-    createNewEvent(day) {
-      this.sendAction('createNewEvent', day);
+    copy() {
+      const day = this.get('day');
+
+      this.sendAction('copyDay', day, day + 1);
+    },
+
+    createNewEvent() {
+      this.sendAction('createNewEvent', this.get('day'));
     },
 
     copyEvent(event, day) {
