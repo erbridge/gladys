@@ -18,6 +18,10 @@ export default Ember.Component.extend({
       this.sendAction('createNewEvent', events, day);
     },
 
+    copyEvent(events, event, day) {
+      this.sendAction('copyEvent', events, event, day);
+    },
+
     onScheduleSelect(schedule) {
       this.sendAction('onScheduleSelect', schedule);
     },

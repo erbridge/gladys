@@ -88,5 +88,9 @@ export default Ember.Component.extend({
     save() {
       this.save();
     },
+
+    copy() {
+      this.sendAction('copyEvent', this.get('event'), this.get('event.day') + 1);
+    },
   },
 });

@@ -13,5 +13,9 @@ export default Ember.Component.extend({
     createNewEvent(day) {
       this.sendAction('createNewEvent', day);
     },
+
+    copyEvent(event, day) {
+      this.sendAction('copyEvent', event, day);
+    },
   },
 });

@@ -127,6 +127,10 @@ body {
   float: left;
 }
 
+.event__copy {
+  float: right;
+}
+
 .event__remove {
   float: right;
 }

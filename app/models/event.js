@@ -12,7 +12,7 @@ const days = [
   'sunday',
 ];
 
-export default DS.Model.extend({
+export default DS.Model.extend(Ember.Copyable, {
   temp: DS.attr('number', {
     defaultValue: 18,
   }),
@@ -89,4 +89,11 @@ export default DS.Model.extend({
       return time;
     },
   }),
+
+  copy() {
+    return this.store.createRecord('event', {
+      temp:    this.get('temp'),
+      seconds: this.get('seconds'),
+    });
+  }
 });

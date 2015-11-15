@@ -41,5 +41,14 @@ export default Ember.Route.extend({
 
       events.addObject(event);
     },
+
+    copyEvent(events, event, day) {
+      const newEvent = event.copy();
+
+      newEvent.set('day', day);
+      newEvent.save();
+
+      events.addObject(newEvent);
+    },
   },
 });

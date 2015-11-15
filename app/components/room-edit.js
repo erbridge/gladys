@@ -58,6 +58,14 @@ export default Ember.Component.extend({
       this.sendAction('createNewEvent', events, day);
     },
 
+    copyEvent(events, event, day) {
+      if (this.get('readOnly')) {
+        return;
+      }
+
+      this.sendAction('copyEvent', events, event, day);
+    },
+
     onScheduleSelect(schedule) {
       if (this.get('readOnly')) {
         return;
