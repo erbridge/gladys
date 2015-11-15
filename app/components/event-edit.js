@@ -9,7 +9,7 @@ export default Ember.Component.extend({
 
   style: Ember.computed('event.secondsToday', 'event.temp', function() {
     // FIXME: Guess at these for the uninitialized.
-    let elHeight     = 21;
+    let elHeight     = 24;
     let parentHeight = 473;
 
     if (this.get('element')) {
